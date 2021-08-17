@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class myFrame extends JFrame {
+    private static myFrame instance = null;
     private JPanel defaultPanel;
     private JButton button_close;
     Dimension WINDOW_SIZE = new Dimension(640, 480);
 
-    public myFrame() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private myFrame() {
         super("Hangman");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,12 +23,21 @@ public class myFrame extends JFrame {
         button_close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                closeWindow();
+//                closeWindow();
+                frameController.closeWindow(instance);
             }
         });
     }
 
-    private void closeWindow() {
-        this.dispose();
+    public static myFrame getInstance() {
+        if (instance == null) {
+            instance = new myFrame();
+        }
+        return instance;
     }
+
+
+//    private void closeWindow() {
+//        this.dispose();
+//    }
 }
