@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class helpers {
+public class Helpers {
     public static void setCentered(JFrame frame) {
         Dimension d = frame.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -10,7 +10,7 @@ public class helpers {
     }
 
     private static String getResourcesPath() {
-        StringBuilder classPath = new StringBuilder(Objects.requireNonNull(main.class.getClassLoader().getResource("main.class")).toString());
+        StringBuilder classPath = new StringBuilder(Objects.requireNonNull(Main.class.getClassLoader().getResource("main.class")).toString());
         classPath.replace(0, 6, "");
         classPath.replace(classPath.lastIndexOf("/"), classPath.length(), "");
         classPath.append("/resources");
