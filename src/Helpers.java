@@ -9,7 +9,7 @@ public class Helpers {
         frame.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight()/2));
     }
 
-    private static String getResourcesPath() {
+    public static String getResourcesPath() {
         StringBuilder classPath = new StringBuilder(Objects.requireNonNull(Main.class.getClassLoader().getResource("main.class")).toString());
         classPath.replace(0, 6, "");
         classPath.replace(classPath.lastIndexOf("/"), classPath.length(), "");

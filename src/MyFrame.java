@@ -2,11 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MyFrame extends JFrame {
     private static MyFrame instance = null;
     private JPanel defaultPanel;
     private JButton button_close;
+    private JLabel label_mode;
+    private JButton button_getRandomWord;
+    private JLabel label_randomWord;
 
     public String getLabel_modeText() {
         return label_mode.getText();
@@ -16,7 +20,15 @@ public class MyFrame extends JFrame {
         this.label_mode.setText(text);
     }
 
-    private JLabel label_mode;
+    public String getLabel_randomWord() {
+        return label_randomWord.getText();
+    }
+
+    public void setLabel_randomWord(String text) {
+        this.label_randomWord.setText(text);
+    }
+
+
     Dimension WINDOW_SIZE = new Dimension(640, 480);
 
     private MyFrame() {
@@ -33,7 +45,20 @@ public class MyFrame extends JFrame {
         button_close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrameController.closeWindow(instance);
+                FrameController.closeWindow();
+            }
+        });
+
+        button_getRandomWord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FrameController.getRandomWord();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
     }
