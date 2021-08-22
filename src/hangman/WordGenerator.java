@@ -1,14 +1,10 @@
-import java.io.File;
+package hangman;
+
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +30,7 @@ public class WordGenerator {
     }
 
     public void setOnlineMode() {
-        this.isOnlineMode = canConnect();
+//        this.isOnlineMode = canConnect();
         System.out.println(isOnlineMode);
     }
 
@@ -42,20 +38,14 @@ public class WordGenerator {
         this.isOnlineMode = false;
     }
 
-    public boolean isOnline() {
-        return canConnect();
-    }
+//    public boolean isOnline() {
+//        return canConnect();
+//    }
 
-    //bruv...
-    //TODO: Replace with ping to remote site
-    private boolean canConnect() {
+    public boolean canConnect() throws IOException {
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL("https://www.funland.bg/search-words/").openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_OK;
-        } catch (Exception e) {
+            return InetAddress.getByName("funland.bg").isReachable(200);
+        }catch (IOException e){
             return false;
         }
     }
@@ -67,19 +57,13 @@ public class WordGenerator {
                 .build();
         String wordRequestMask = "..й..";//words request goes here
         HttpRequest request = HttpRequest.newBuilder()
-//                .POST(HttpRequest.BodyPublishers.ofString("fw=" + URLEncoder.encode(wordRequestMask, StandardCharsets.UTF_8)))
                 .POST(HttpRequest.BodyPublishers.ofString("fw=" + wordRequestMask))
                 .uri(URI.create("https://www.funland.bg/search-words/"))
                 .setHeader("User-Agent", "Java 11 HttpClient Bot") // add request header
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .build();
-//        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         Matcher matcher = Pattern.compile("<td><.*>.*<\\/td>\\R<td>.*<\\/td>").matcher(response.body());
-
-//        //Local test page
-//        String response = new String(Files.readAllBytes(Paths.get(Helpers.getResourcesPath() + "\\testpage.html")));
-//        Matcher matcher = Pattern.compile("<td><a href=.*>.*</td>\\n<td>.*</td>").matcher(response);
 
         List<Word> wordsFound = new ArrayList<>();
         while (matcher.find()) {
