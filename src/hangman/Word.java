@@ -1,3 +1,5 @@
+package hangman;
+
 public class Word {
     private final String word;
     private final String description;

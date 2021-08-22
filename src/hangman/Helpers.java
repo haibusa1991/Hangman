@@ -1,3 +1,5 @@
+package hangman;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -6,7 +8,13 @@ public class Helpers {
     public static void setCentered(JFrame frame) {
         Dimension d = frame.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight()/2));
+        frame.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight() / 2));
+    }
+
+    public static void setCentered(JDialog dialog) {
+        Dimension d = dialog.getSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        dialog.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight() / 2));
     }
 
     public static String getResourcesPath() {

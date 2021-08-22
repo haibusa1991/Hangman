@@ -1,11 +1,16 @@
+package hangman.frames;
+
+import hangman.FrameController;
+import hangman.Helpers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class MyFrame extends JFrame {
-    private static MyFrame instance = null;
+public class HangmanFrame extends JFrame {
+    private static HangmanFrame instance = null;
     private JPanel defaultPanel;
     private JButton button_close;
     private JLabel label_mode;
@@ -31,7 +36,7 @@ public class MyFrame extends JFrame {
 
     Dimension WINDOW_SIZE = new Dimension(640, 480);
 
-    private MyFrame() {
+    private HangmanFrame() {
         super("Hangman");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,7 +50,17 @@ public class MyFrame extends JFrame {
         button_close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrameController.closeWindow();
+                try {
+                    FrameController.getInstance().terminateApp();
+                } catch (UnsupportedLookAndFeelException unsupportedLookAndFeelException) {
+                    unsupportedLookAndFeelException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                } catch (InstantiationException instantiationException) {
+                    instantiationException.printStackTrace();
+                } catch (IllegalAccessException illegalAccessException) {
+                    illegalAccessException.printStackTrace();
+                }
             }
         });
 
@@ -63,9 +78,9 @@ public class MyFrame extends JFrame {
         });
     }
 
-    public static MyFrame getInstance() {
+    public static HangmanFrame getInstance() {
         if (instance == null) {
-            instance = new MyFrame();
+            instance = new HangmanFrame();
         }
         return instance;
     }
