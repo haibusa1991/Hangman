@@ -42,7 +42,7 @@ public class HangmanFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(defaultPanel);
         this.pack();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(Helpers.getIconPath()));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(Helpers.getWindowIconPath()));
         this.setSize(WINDOW_SIZE);
         Helpers.setCentered(this);
         this.setVisible(true);

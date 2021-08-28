@@ -5,14 +5,13 @@ import hangman.Helpers;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.EventListener;
+import java.awt.event.*;
 
 public class AboutDialog extends JDialog {
     private JPanel aboutFrame;
     private JLabel label_info;
+    private JLabel label_version;
+    private JLabel label_github;
     private static AboutDialog instance = null;
     private final Dimension WINDOW_SIZE = new Dimension(200, 200);
 
@@ -28,21 +27,35 @@ public class AboutDialog extends JDialog {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setContentPane(aboutFrame);
         this.setSize(WINDOW_SIZE);
-        this.setAlwaysOnTop(true);//?
+        label_github.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                label_github.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                Helpers.setUnderlined(label_github);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label_github.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                Helpers.setPlain(label_github);
+            }
+
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    FrameController.getInstance();
+                    FrameController.openGithub();
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
-    public void showDialog() {
+    public void showAboutDialog() {
         if (!this.isVisible()) {
             Helpers.setCentered(this);
             this.setVisible(true);
-        }else {
-            this.toFront();
-            this.repaint();
         }
-    }
-
-    public boolean isCurrentlyVisible(){
-        return getInstance().aboutFrame.isVisible();
     }
 
 }

@@ -1,21 +1,23 @@
 package hangman;
 
+import hangman.LogicController.LogicController;
+import hangman.LogicController.SettingsFileHandler;
 import hangman.frames.AboutDialog;
 import hangman.frames.HangmanFrame;
 import hangman.frames.MenuFrame;
+import hangman.frames.SettingsDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 
 public class FrameController {
-    private static FrameController controller = null;
-//    private static FrameUpdater updater = new FrameUpdater();
+    private static FrameController instance = null;
 
     private FrameController() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-
-//        updater.start();
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        showMenuFrame();
+        MenuFrame.getInstance();
     }
 
     public void terminateApp() {
@@ -23,24 +25,14 @@ public class FrameController {
     }
 
     public static FrameController getInstance() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        if (controller == null) {
-            controller = new FrameController();
+        if (instance == null) {
+            instance = new FrameController();
         }
-        return controller;
-    }
-//
-//    public static void closeWindow() {
-//        HangmanFrame frame = HangmanFrame.getInstance();
-//        updater.interrupt();
-//        frame.dispose();
-//    }
-
-    public void showAboutDialog() throws InterruptedException {
-        AboutDialog.getInstance().showDialog();
+        return instance;
     }
 
-    private void showMenuFrame() {
-        MenuFrame.getInstance();
+    public void showAboutDialog() {
+        AboutDialog.getInstance().showAboutDialog();
     }
 
     public static void getRandomWord() throws IOException, InterruptedException {
@@ -49,7 +41,35 @@ public class FrameController {
         frame.setLabel_randomWord(wg.getRandomWord());
     }
 
+    public static void closeOtherFrames() {
+        AboutDialog.getInstance().dispose(); //close about
+        //close settings
+
+    }
+
     public static void updateOnlineStatus(boolean currentStatus) {
         HangmanFrame.getInstance().setLabel_modeText("Current internet status is: " + currentStatus);
+    }
+
+    public static void openFunlandSite() {
+        try {
+            Desktop.getDesktop().browse(new URL("http://funland.bg").toURI());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void openGithub() {
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/haibusa1991").toURI());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void showSettingsDialog(){
+        LogicController.getInstance().loadSettings();
+        SettingsDialog.getInstance().showSettingsDialog();
+
     }
 }

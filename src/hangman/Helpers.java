@@ -2,6 +2,8 @@ package hangman;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 import java.util.Objects;
 
 public class Helpers {
@@ -18,7 +20,7 @@ public class Helpers {
     }
 
     public static String getResourcesPath() {
-        StringBuilder classPath = new StringBuilder(Objects.requireNonNull(Main.class.getClassLoader().getResource("main.class")).toString());
+        StringBuilder classPath = new StringBuilder((Objects.requireNonNull(Hangman.class.getResource("Hangman.class")).toString()));
         classPath.replace(0, 6, "");
         classPath.replace(classPath.lastIndexOf("/"), classPath.length(), "");
         classPath.append("/resources");
@@ -28,7 +30,26 @@ public class Helpers {
         return classPath.toString();
     }
 
-    public static String getIconPath() {
-        return getResourcesPath() + "\\icons\\icon.png";
+    public static String getWindowIconPath() {
+        return getResourcesPath() + "\\icons\\window.png";
     }
+
+    public static String getHelpIconPath() {
+        return getResourcesPath() + "\\icons\\help15x15.png";
+    }
+
+    public static void setUnderlined(JLabel label) {
+        Font font = label.getFont();
+        Map attributes = font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        label.setFont(font.deriveFont(attributes));
+    }
+
+    public static void setPlain(JLabel label) {
+        Font font = label.getFont();
+        Map attributes = font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, null);
+        label.setFont(font.deriveFont(attributes));
+    }
+
 }
