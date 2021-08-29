@@ -97,17 +97,22 @@ public class SettingsDialog extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                dispose();
+                onCancel();
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+    }
+
+    private void onCancel(){
+        LogicController.getInstance().loadSettings();
+        dispose();
     }
 
     public void showSettingsDialog() {

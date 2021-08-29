@@ -2,6 +2,7 @@ package hangman.frames;
 
 import hangman.FrameController;
 import hangman.Helpers;
+import hangman.LogicController.LogicController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +62,7 @@ public class MenuFrame extends JFrame {
         label_poweredBy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                FrameController.openFunlandSite();
+                LogicController.getInstance().openFunlandSite();
             }
 
             @Override
@@ -80,7 +81,8 @@ public class MenuFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    FrameController.getInstance().showSettingsDialog();
+                    FrameController.getInstance();
+                    FrameController.showSettingsDialog();
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }

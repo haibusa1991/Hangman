@@ -2,6 +2,7 @@ package hangman.frames;
 
 import hangman.FrameController;
 import hangman.Helpers;
+import hangman.LogicController.LogicController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,9 +43,8 @@ public class AboutDialog extends JDialog {
 
             public void mouseClicked(MouseEvent e) {
                 try {
-                    FrameController.getInstance();
-                    FrameController.openGithub();
-                } catch (Exception ex){
+                    LogicController.getInstance().openGithub();
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
