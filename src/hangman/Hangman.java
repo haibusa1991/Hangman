@@ -1,7 +1,6 @@
 package hangman;
 
-import hangman.frames.HangmanFrame;
-import hangman.frames.MenuFrame;
+import hangman.LogicController.LogicController;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -9,5 +8,6 @@ import java.io.IOException;
 public class Hangman {
     public static void main(String[] args) throws IOException, InterruptedException, UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         FrameController.getInstance();
+        LogicController.getInstance();
     }
 }

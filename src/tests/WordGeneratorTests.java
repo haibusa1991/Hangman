@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class WordGeneratorTests {
     @Test
     public void canConnect() throws IOException, InterruptedException {
-        WordGenerator wg = WordGenerator.getInstance();
+        WordGenerator  wg = WordGenerator.getInstance();
         boolean cc = wg.canConnect();
         assertTrue(cc);
     }

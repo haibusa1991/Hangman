@@ -1,16 +1,13 @@
 package hangman;
 
 import hangman.LogicController.LogicController;
-import hangman.LogicController.SettingsFileHandler;
-import hangman.frames.AboutDialog;
-import hangman.frames.HangmanFrame;
-import hangman.frames.MenuFrame;
-import hangman.frames.SettingsDialog;
+import hangman.frames.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URL;
 
 public class FrameController {
     private static FrameController instance = null;
@@ -51,25 +48,12 @@ public class FrameController {
         HangmanFrame.getInstance().setLabel_modeText("Current internet status is: " + currentStatus);
     }
 
-    public static void openFunlandSite() {
-        try {
-            Desktop.getDesktop().browse(new URL("http://funland.bg").toURI());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public static void openGithub() {
-        try {
-            Desktop.getDesktop().browse(new URL("https://github.com/haibusa1991").toURI());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public static void showSettingsDialog(){
+    public static void showSettingsDialog() {
         LogicController.getInstance().loadSettings();
         SettingsDialog.getInstance().showSettingsDialog();
+    }
 
+    public void throwError(String message) {
+       JDialog errorDialog = new errorDialog(message);
     }
 }

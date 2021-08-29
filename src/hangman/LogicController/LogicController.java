@@ -2,13 +2,18 @@ package hangman.LogicController;
 
 import hangman.frames.SettingsDialog;
 
+import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogicController {
     private static LogicController instance = null;
+    private Settings currentSettings = null;
 
     private LogicController() {
+        SettingsDialog.getInstance();
+        loadSettings();
     }
 
     public static LogicController getInstance() {
@@ -20,27 +25,47 @@ public class LogicController {
     }
 
     public void saveSettings() {
-        SettingsDialog sd = SettingsDialog.getInstance();
+        SettingsDialog settingsDialog = SettingsDialog.getInstance();
         Settings settings = new Settings();
-        settings.isOnline = sd.getCheckBox_onlineMode();
+        settings.isOnline = settingsDialog.getCheckBox_onlineMode();
         List<Boolean> difficultiesStates = new ArrayList<>();
-        difficultiesStates.add(sd.getRadioButton_easyDifficulty());
-        difficultiesStates.add(sd.getRadioButton_mediumDifficulty());
-        difficultiesStates.add(sd.getRadioButton_hardDifficulty());
+        difficultiesStates.add(settingsDialog.getRadioButton_easyDifficulty());
+        difficultiesStates.add(settingsDialog.getRadioButton_mediumDifficulty());
+        difficultiesStates.add(settingsDialog.getRadioButton_hardDifficulty());
         settings.difficulty = difficultiesStates;
-        settings.doesSaveOnExit = sd.getCheckBox_saveOnExit();
-        SettingsFileHandler sfh = new SettingsFileHandler();
-        sfh.saveSettings(settings);
+        settings.doesSaveOnExit = settingsDialog.getCheckBox_saveOnExit();
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.saveSettings(settings);
+        currentSettings = settings;
     }
 
     public void loadSettings() {
-        SettingsDialog sd = SettingsDialog.getInstance();
-        SettingsFileHandler sfh = new SettingsFileHandler();
-        Settings settings = sfh.loadSettings();
-        sd.setCheckBox_onlineMode(settings.isOnline);
-        sd.setRadioButton_easyDifficulty(settings.difficulty.get(0));
-        sd.setRadioButton_mediumDifficulty(settings.difficulty.get(1));
-        sd.setRadioButton_hardDifficulty(settings.difficulty.get(2));
-        sd.setCheckBox_saveOnExit(settings.doesSaveOnExit);
+        if (currentSettings == null) {
+            FileHandler fileHandler = new FileHandler();
+            currentSettings = fileHandler.loadSettings();
+        } else {
+            SettingsDialog settingsDialog = SettingsDialog.getInstance();
+            settingsDialog.setCheckBox_onlineMode(currentSettings.isOnline);
+            settingsDialog.setRadioButton_easyDifficulty(currentSettings.difficulty.get(0));
+            settingsDialog.setRadioButton_mediumDifficulty(currentSettings.difficulty.get(1));
+            settingsDialog.setRadioButton_hardDifficulty(currentSettings.difficulty.get(2));
+            settingsDialog.setCheckBox_saveOnExit(currentSettings.doesSaveOnExit);
+        }
+    }
+
+    public void openFunlandSite() {
+        try {
+            Desktop.getDesktop().browse(new URL("http://funland.bg").toURI());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void openGithub() {
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/haibusa1991").toURI());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
