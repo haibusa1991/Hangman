@@ -1,4 +1,4 @@
-package hangman.LogicController;
+package hangman.logicController;
 
 import java.io.Serializable;
 import java.util.Map;

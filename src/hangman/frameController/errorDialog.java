@@ -1,4 +1,4 @@
-package hangman.frames;
+package hangman.frameController;
 
 import hangman.Helpers;
 

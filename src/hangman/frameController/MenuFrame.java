@@ -1,8 +1,7 @@
-package hangman.frames;
+package hangman.frameController;
 
-import hangman.FrameController;
 import hangman.Helpers;
-import hangman.LogicController.LogicController;
+import hangman.logicController.LogicController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +18,7 @@ public class MenuFrame extends JFrame {
     private JLabel label_poweredBy;
     private final Dimension WINDOW_SIZE = new Dimension(250, 400);
 
-    public static MenuFrame getInstance() {
+    protected static MenuFrame getInstance() {
         if (instance == null) {
             instance = new MenuFrame();
         }
@@ -36,13 +35,13 @@ public class MenuFrame extends JFrame {
         this.pack();
         this.setSize(WINDOW_SIZE);
         Helpers.setCentered(this);
-        this.setVisible(true);
 
         button_exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    FrameController.getInstance().terminateApp();
+                    LogicController lc = LogicController.getInstance();
+                    lc.terminateApp();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -53,7 +52,8 @@ public class MenuFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    FrameController.getInstance().showAboutDialog();
+                    FrameController fc = FrameController.getInstance();
+                    fc.showAboutDialog();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -81,9 +81,9 @@ public class MenuFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    FrameController.getInstance();
-                    FrameController.showSettingsDialog();
-                }catch (Exception ex){
+                    FrameController fc = FrameController.getInstance();
+                    fc.showSettingsDialog();
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
@@ -94,7 +94,8 @@ public class MenuFrame extends JFrame {
         instance.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
-                FrameController.closeOtherFrames();
+                FrameController fc = FrameController.getInstance();
+                fc.closeOtherFrames();
             }
 
             @Override
@@ -102,5 +103,11 @@ public class MenuFrame extends JFrame {
                 //clean up later perhaps
             }
         });
+    }
+
+    protected void showFrame() {
+        if (!this.isVisible()) {
+            this.setVisible(true);
+        }
     }
 }

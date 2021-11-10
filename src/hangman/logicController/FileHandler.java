@@ -1,6 +1,6 @@
-package hangman.LogicController;
+package hangman.logicController;
 
-import hangman.FrameController;
+import hangman.frameController.FrameController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -13,7 +13,7 @@ import java.util.zip.InflaterInputStream;
 
 public class FileHandler implements Serializable {
 
-    public void saveSettings(Settings settings) {
+    public void writeToDisk(Settings settings) {
         try {
             FileOutputStream fos = new FileOutputStream("settings.dat");
             ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
@@ -25,7 +25,7 @@ public class FileHandler implements Serializable {
         }
     }
 
-    public Settings loadSettings() {
+    public Settings readFromDisk() {
         try {
             FileInputStream fis = new FileInputStream("settings.dat");
             ObjectInputStream ois = new ObjectInputStream(new InflaterInputStream(fis));
@@ -34,17 +34,8 @@ public class FileHandler implements Serializable {
             fis.close();
             return settings;
         } catch (Exception ex) {
-            Settings settings = new Settings() {{
-                difficulty = new ArrayList<>() {{
-                    add(true);
-                    add(false);
-                    add(false);
-                }};
-                isOnline = true;
-                doesSaveOnExit = true;
-            }};
-            saveSettings(settings);
-            return settings;
+            System.out.println("returning new settings");
+            return new Settings();
         }
     }
 

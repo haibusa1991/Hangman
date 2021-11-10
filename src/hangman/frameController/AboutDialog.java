@@ -1,8 +1,7 @@
-package hangman.frames;
+package hangman.frameController;
 
-import hangman.FrameController;
 import hangman.Helpers;
-import hangman.LogicController.LogicController;
+import hangman.logicController.LogicController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +15,7 @@ public class AboutDialog extends JDialog {
     private static AboutDialog instance = null;
     private final Dimension WINDOW_SIZE = new Dimension(200, 200);
 
-    public static AboutDialog getInstance() {
+    protected static AboutDialog getInstance() {
         if (instance == null) {
             instance = new AboutDialog();
         }
@@ -51,7 +50,7 @@ public class AboutDialog extends JDialog {
         });
     }
 
-    public void showAboutDialog() {
+    protected void showDialog() {
         if (!this.isVisible()) {
             Helpers.setCentered(this);
             this.setVisible(true);

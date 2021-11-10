@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="hangman.frames.AboutDialog">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="hangman.frameController.AboutDialog">
   <grid id="27dc6" binding="aboutFrame" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
@@ -41,7 +41,8 @@
         </constraints>
         <properties>
           <enabled value="true"/>
-          <text value="github.com/haibusa1991"/>
+          <foreground color="-16777029"/>
+          <text value="http://github.com/haibusa1991"/>
         </properties>
       </component>
       <hspacer id="5510">

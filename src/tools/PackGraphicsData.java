@@ -1,8 +1,8 @@
 package tools;
 
 import hangman.Helpers;
-import hangman.LogicController.FileHandler;
-import hangman.LogicController.GfxPack;
+import hangman.logicController.FileHandler;
+import hangman.logicController.GfxPack;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;

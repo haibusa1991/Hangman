@@ -1,7 +1,7 @@
-package hangman.frames;
+package hangman.frameController;
 
-import hangman.FrameController;
 import hangman.Helpers;
+import hangman.logicController.LogicController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,30 +50,21 @@ public class HangmanFrame extends JFrame {
         button_close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    FrameController.getInstance().terminateApp();
-                } catch (UnsupportedLookAndFeelException unsupportedLookAndFeelException) {
-                    unsupportedLookAndFeelException.printStackTrace();
-                } catch (ClassNotFoundException classNotFoundException) {
-                    classNotFoundException.printStackTrace();
-                } catch (InstantiationException instantiationException) {
-                    instantiationException.printStackTrace();
-                } catch (IllegalAccessException illegalAccessException) {
-                    illegalAccessException.printStackTrace();
-                }
+                LogicController lc = LogicController.getInstance();
+                lc.terminateApp();
             }
         });
 
         button_getRandomWord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    FrameController.getRandomWord();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-                }
+//                try {
+//                    FrameController.getRandomWord();
+//                } catch (IOException ioException) {
+//                    ioException.printStackTrace();
+//                } catch (InterruptedException interruptedException) {
+//                    interruptedException.printStackTrace();
+//                }
             }
         });
     }

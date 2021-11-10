@@ -80,7 +80,7 @@ public class WordGenerator {
         if (wordsFound.isEmpty()) {
             return "Error fetching word.";
         }
-        return wordsFound.get(new Random().nextInt(wordsFound.size())).toString();
+        return wordsFound.get(new Random().nextInt(wordsFound.size()-1)).toString();
     }
 
     public String getRandomWord() throws IOException, InterruptedException {
