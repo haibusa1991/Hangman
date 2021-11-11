@@ -1,8 +1,8 @@
 package tools;
 
-import hangman.Helpers;
-import hangman.logicController.FileHandler;
-import hangman.logicController.GfxPack;
+import hangman.util.Util;
+import hangman.util.FileHandler;
+import hangman.gfxController.GfxPack;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -15,7 +15,7 @@ import java.util.zip.DeflaterOutputStream;
 
 public class PackGraphicsData implements Serializable {
 
-    private final int NUMBER_OF_FRAMES = 14;
+    private final int NUMBER_OF_FRAMES = 12;
 
     private GfxPack loadSourceImagesFromDisk() {
         try {
@@ -45,9 +45,9 @@ public class PackGraphicsData implements Serializable {
     }
 
     public static void main(String[] args) {
-//        PackGraphicsData packGraphicsData = new PackGraphicsData();
-//        GfxPack gfxPack = packGraphicsData.loadSourceImagesFromDisk();
-//        packGraphicsData.savePackedImagesToDisk(gfxPack);
+        PackGraphicsData packGraphicsData = new PackGraphicsData();
+        GfxPack gfxPack = packGraphicsData.loadSourceImagesFromDisk();
+        packGraphicsData.savePackedImagesToDisk(gfxPack);
         FileHandler fileHandler= new FileHandler();
         List<BufferedImage> images = fileHandler.loadGfx();
         try {
@@ -55,15 +55,16 @@ public class PackGraphicsData implements Serializable {
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             JLabel currentImage = new JLabel(new ImageIcon(images.get(0)));
             frame.add(currentImage);
-            frame.setSize(400, 400);
+            frame.setSize(500, 800);
             frame.setResizable(false);
-            Helpers.setCentered(frame);
+            Util.setCentered(frame);
             frame.setVisible(true);
             for (BufferedImage image : images) {
                 currentImage.setIcon(new ImageIcon(image));
                 frame.repaint();
-                Thread.sleep(500);
+                Thread.sleep(250);
             }
+            System.exit(0);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

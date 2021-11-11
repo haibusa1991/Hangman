@@ -1,11 +1,11 @@
 package hangman.logicController;
 
-import hangman.frameController.SettingsDialog;
+import hangman.gfxController.GfxController;
+import hangman.util.FileHandler;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LogicController {
     private static LogicController instance = null;
@@ -22,35 +22,6 @@ public class LogicController {
         return instance;
     }
 
-//    public void saveSettings() {
-//        SettingsDialog settingsDialog = SettingsDialog.getInstance();
-//        Settings settings = new Settings();
-//        settings.isOnline = settingsDialog.getCheckBox_onlineMode();
-//        List<Boolean> difficultiesStates = new ArrayList<>();
-//        difficultiesStates.add(settingsDialog.getRadioButton_easyDifficulty());
-//        difficultiesStates.add(settingsDialog.getRadioButton_mediumDifficulty());
-//        difficultiesStates.add(settingsDialog.getRadioButton_hardDifficulty());
-//        settings.difficulty = difficultiesStates;
-//        settings.doesSaveOnExit = settingsDialog.getCheckBox_saveOnExit();
-//        FileHandler fileHandler = new FileHandler();
-//        fileHandler.writeToDisk(settings);
-//        currentSettings = settings;
-//    }
-
-//    public void readFromDisk() {
-//        if (currentSettings == null) {
-//            FileHandler fileHandler = new FileHandler();
-//            currentSettings = fileHandler.readFromDisk();
-//        } else {
-//            SettingsDialog settingsDialog = SettingsDialog.getInstance();
-//            settingsDialog.setCheckBox_onlineMode(currentSettings.isOnline);
-//            settingsDialog.setRadioButton_easyDifficulty(currentSettings.difficulty.get(0));
-//            settingsDialog.setRadioButton_mediumDifficulty(currentSettings.difficulty.get(1));
-//            settingsDialog.setRadioButton_hardDifficulty(currentSettings.difficulty.get(2));
-//            settingsDialog.setCheckBox_saveOnExit(currentSettings.doesSaveOnExit);
-//        }
-//    }
-
     public Settings readSettingsFromDisk() {
         FileHandler fh = new FileHandler();
         try {
@@ -60,7 +31,7 @@ public class LogicController {
         }
     }
 
-    public void saveSettingsToDisk(Settings settings){
+    public void saveSettingsToDisk(Settings settings) {
         FileHandler fh = new FileHandler();
         fh.writeToDisk(settings);
     }
@@ -85,8 +56,15 @@ public class LogicController {
         System.exit(0);
     }
 
-    public void createEmptySettings(){
+    public void createEmptySettings() {
         FileHandler fh = new FileHandler();
         fh.writeToDisk(new Settings());
     }
+
+    public BufferedImage readMockImage() {
+        GfxController gfx = GfxController.getInstance();
+        return gfx.getMockImage();
+    }
+
+
 }

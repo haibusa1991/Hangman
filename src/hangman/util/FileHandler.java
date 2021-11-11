@@ -1,6 +1,8 @@
-package hangman.logicController;
+package hangman.util;
 
 import hangman.frameController.FrameController;
+import hangman.gfxController.GfxPack;
+import hangman.logicController.Settings;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -41,7 +43,8 @@ public class FileHandler implements Serializable {
 
     private GfxPack loadGfxFromDisk() {
         try {
-            FileInputStream fis = new FileInputStream("gfx.dat");
+//            FileInputStream fis = new FileInputStream("gfx.dat");
+            FileInputStream fis = new FileInputStream("D:\\Repos\\Hangman\\gfx.dat");
             ObjectInputStream ois = new ObjectInputStream(new InflaterInputStream(fis));
             GfxPack pack = (GfxPack) ois.readObject();
             ois.close();

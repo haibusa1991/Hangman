@@ -1,6 +1,6 @@
 package hangman.frameController;
 
-import hangman.Helpers;
+import hangman.util.Util;
 import hangman.logicController.LogicController;
 
 import javax.swing.*;
@@ -9,13 +9,17 @@ import java.awt.event.*;
 
 public class MenuFrame extends JFrame {
     static MenuFrame instance = null;
+
     private JPanel menuFrame;
+
     private JButton button_about;
     private JButton button_exit;
     private JButton button_settings;
     private JButton button_continueGame;
     private JButton button_newGame;
+
     private JLabel label_poweredBy;
+
     private final Dimension WINDOW_SIZE = new Dimension(250, 400);
 
     protected static MenuFrame getInstance() {
@@ -31,10 +35,10 @@ public class MenuFrame extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(menuFrame);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(Helpers.getWindowIconPath()));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(Util.getWindowIconPath()));
         this.pack();
         this.setSize(WINDOW_SIZE);
-        Helpers.setCentered(this);
+        Util.setCentered(this);
 
         button_exit.addActionListener(new ActionListener() {
             @Override
@@ -68,15 +72,16 @@ public class MenuFrame extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label_poweredBy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                Helpers.setUnderlined(label_poweredBy);
+                Util.setUnderlined(label_poweredBy);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 label_poweredBy.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                Helpers.setPlain(label_poweredBy);
+                Util.setPlain(label_poweredBy);
             }
         });
+
         button_settings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,6 +93,14 @@ public class MenuFrame extends JFrame {
                 }
             }
         });
+
+        this.button_newGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FrameController fc = FrameController.getInstance();
+                fc.showGameFrame();
+            }
+        });
     }
 
     private static void attachWindowListener() {
@@ -95,7 +108,7 @@ public class MenuFrame extends JFrame {
             @Override
             public void windowGainedFocus(WindowEvent e) {
                 FrameController fc = FrameController.getInstance();
-                fc.closeOtherFrames();
+                fc.closeAboutDialog();
             }
 
             @Override

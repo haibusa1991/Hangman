@@ -56,7 +56,8 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <enabled value="true"/>
+          <text value="New game"/>
         </properties>
       </component>
       <vspacer id="1693e">

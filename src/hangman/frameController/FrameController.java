@@ -1,9 +1,9 @@
 package hangman.frameController;
 
 import hangman.logicController.LogicController;
-import hangman.logicController.Settings;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 public class FrameController {
     private static FrameController instance = null;
@@ -39,30 +39,41 @@ public class FrameController {
         ad.showDialog();
     }
 
-//    public static void getRandomWord() throws IOException, InterruptedException {
-//        HangmanFrame frame = HangmanFrame.getInstance();
-//        WordGenerator wg = WordGenerator.getInstance();
-//        frame.setLabel_randomWord(wg.getRandomWord());
-//    }
+    private void isolateGameFrame() {
+        AboutDialog ad = AboutDialog.getInstance();
+        ad.dispose();
 
-    public void closeOtherFrames() {
+        MenuFrame mf = MenuFrame.getInstance();
+        mf.dispose();
+
+        GameFrame gf = GameFrame.getInstance();
+        gf.showFrame();
+    }
+
+    public void closeAboutDialog() {
         AboutDialog ad = AboutDialog.getInstance();
         ad.dispose();
     }
 
-//    public static void updateOnlineStatus(boolean currentStatus) {
-//        HangmanFrame.getInstance().setLabel_modeText("Current internet status is: " + currentStatus);
-//    }
 
     public void showSettingsDialog() {
         SettingsDialog sd = SettingsDialog.getInstance();
-        LogicController lc = LogicController.getInstance();
-        Settings s = lc.readSettingsFromDisk();
-        sd.setSettings(s);
         sd.showDialog();
     }
 
     public void throwError(String message) {
-        JDialog errorDialog = new errorDialog(message);
+        ErrorDialog errorDialog = new ErrorDialog(message);
     }
+
+    public void showGameFrame(){
+        isolateGameFrame();
+
+        LogicController lc = LogicController.getInstance();
+        BufferedImage bi = lc.readMockImage();
+
+        GameFrame gf = GameFrame.getInstance();
+        gf.setMockImage(bi);
+        gf.showFrame();
+    }
+
 }

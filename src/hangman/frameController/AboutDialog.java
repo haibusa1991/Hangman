@@ -1,6 +1,6 @@
 package hangman.frameController;
 
-import hangman.Helpers;
+import hangman.util.Util;
 import hangman.logicController.LogicController;
 
 import javax.swing.*;
@@ -31,13 +31,13 @@ public class AboutDialog extends JDialog {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label_github.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                Helpers.setUnderlined(label_github);
+                Util.setUnderlined(label_github);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 label_github.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                Helpers.setPlain(label_github);
+                Util.setPlain(label_github);
             }
 
             public void mouseClicked(MouseEvent e) {
@@ -52,7 +52,7 @@ public class AboutDialog extends JDialog {
 
     protected void showDialog() {
         if (!this.isVisible()) {
-            Helpers.setCentered(this);
+            Util.setCentered(this);
             this.setVisible(true);
         }
     }

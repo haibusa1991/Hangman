@@ -1,58 +1,60 @@
 package hangman.frameController;
 
-import hangman.Helpers;
+import hangman.util.Util;
+import hangman.logicController.LogicController;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class errorDialog extends JDialog {
+public class ErrorDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JLabel label_message;
 
-    public errorDialog(String message) {
+    public ErrorDialog(String message) {
         setContentPane(contentPane);
-        setModal(true);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setContentPane(this.contentPane);
         setSize(300, 120);
         setResizable(false);
         setAlwaysOnTop(true);
-        Helpers.setCentered(this);
-        getRootPane().setDefaultButton(buttonOK);
+        Util.setCentered(this);
         label_message.setText(message);
-        setVisible(true);
 
-        buttonOK.addActionListener(new ActionListener() {
+
+        this.buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("FUY");
-                onOK();
+                onAnyButtonClick();
             }
         });
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        // call onAnyButtonClick() when cross is clicked
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                System.out.println("closing");
-                onOK();
+                onAnyButtonClick();
             }
         });
 
-        // call onCancel() on ESCAPE
+        // call onAnyButtonClick() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onAnyButtonClick();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Fu");
+                onAnyButtonClick();
             }
         });
+
+        this.setModalityType(ModalityType.APPLICATION_MODAL);
+        setVisible(true);
     }
 
-    private void onOK() {
-        this.dispose();
-        System.exit(-1);
+    private void onAnyButtonClick() {
+        LogicController lc = LogicController.getInstance();
+        lc.terminateApp();
     }
 
 }

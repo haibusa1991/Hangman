@@ -1,6 +1,6 @@
 package hangman.frameController;
 
-import hangman.Helpers;
+import hangman.util.Util;
 import hangman.logicController.Difficulty;
 import hangman.logicController.Settings;
 import hangman.logicController.LogicController;
@@ -35,27 +35,28 @@ public class SettingsDialog extends JDialog {
     private SettingsDialog() {
         ToolTipManager.sharedInstance().setInitialDelay(50);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setContentPane(contentPane);
-        setModal(true);
+        setContentPane(this.contentPane);
+        setModalityType(ModalityType.APPLICATION_MODAL);
         this.setResizable(false);
         this.pack();
-        Helpers.setCentered(this);
+        Util.setCentered(this);
 
         ButtonGroup difficulties = new ButtonGroup();
-        difficulties.add(radioButton_easyDifficulty);
-        difficulties.add(radioButton_mediumDifficulty);
-        difficulties.add(radioButton_hardDifficulty);
+        difficulties.add(this.radioButton_easyDifficulty);
+        difficulties.add(this.radioButton_mediumDifficulty);
+        difficulties.add(this.radioButton_hardDifficulty);
 
-        buttonOK.addActionListener(new ActionListener() {
+        loadSettings();
 
+        this.buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveSettings();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        this.buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                onCancel();
             }
         });
 
@@ -67,7 +68,7 @@ public class SettingsDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        this.contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -75,60 +76,51 @@ public class SettingsDialog extends JDialog {
 
     }
 
+    private void loadSettings() {
+        LogicController lc = LogicController.getInstance();
+        this.settings = lc.readSettingsFromDisk();
+        updateDialogValues();
+    }
+
     private void onCancel() {
-//        dispose();
-        this.setVisible(false);
+        dispose();
     }
 
     protected void showDialog() {
         if (!this.isVisible()) {
-            Helpers.setCentered(this);
-            updateDialogValues();
+            Util.setCentered(this);
             this.setVisible(true);
         }
     }
 
-    protected Settings getSettings() {
-        return this.settings;
-    }
-
-    protected void setSettings(Settings settings) {
-        if (this.settings != null) {
-            return;
-        }
-        this.settings = settings;
-        updateDialogValues();
-    }
-
-
     private void updateDialogValues() {
         zeroOutFields();
 
-        if (settings.difficulty == Difficulty.EASY) {
+        if (this.settings.difficulty == Difficulty.EASY) {
             this.radioButton_easyDifficulty.setSelected(true);
-        } else if (settings.difficulty == Difficulty.MEDIUM) {
+        } else if (this.settings.difficulty == Difficulty.MEDIUM) {
             this.radioButton_mediumDifficulty.setSelected(true);
         } else {
             this.radioButton_hardDifficulty.setSelected(true);
         }
 
-        checkBox_onlineMode.setSelected(settings.isOnline);
-        checkBox_saveOnExit.setSelected(settings.doesSaveOnExit);
+        this.checkBox_onlineMode.setSelected(settings.isOnline);
+        this.checkBox_saveOnExit.setSelected(settings.doesSaveOnExit);
     }
 
     private void zeroOutFields() {
         this.radioButton_easyDifficulty.setSelected(false);
         this.radioButton_mediumDifficulty.setSelected(false);
         this.radioButton_hardDifficulty.setSelected(false);
-        checkBox_onlineMode.setSelected(false);
-        checkBox_saveOnExit.setSelected(false);
+        this.checkBox_onlineMode.setSelected(false);
+        this.checkBox_saveOnExit.setSelected(false);
     }
 
     private void saveSettings() {
 
-        if (radioButton_easyDifficulty.isSelected()) {
+        if (this.radioButton_easyDifficulty.isSelected()) {
             this.settings.difficulty = Difficulty.EASY;
-        } else if (radioButton_mediumDifficulty.isSelected()) {
+        } else if (this.radioButton_mediumDifficulty.isSelected()) {
             this.settings.difficulty = Difficulty.MEDIUM;
         } else {
             this.settings.difficulty = Difficulty.HARD;

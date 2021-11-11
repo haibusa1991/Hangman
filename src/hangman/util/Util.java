@@ -1,12 +1,15 @@
-package hangman;
+package hangman.util;
+
+import hangman.Hangman;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
 import java.util.Map;
 import java.util.Objects;
 
-public class Helpers {
+public class Util {
     public static void setCentered(JFrame frame) {
         Dimension d = frame.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -50,6 +53,16 @@ public class Helpers {
         Map attributes = font.getAttributes();
         attributes.put(TextAttribute.UNDERLINE, null);
         label.setFont(font.deriveFont(attributes));
+    }
+
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
     }
 
 }

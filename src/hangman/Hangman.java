@@ -3,6 +3,8 @@ package hangman;
 import hangman.frameController.FrameController;
 import hangman.logicController.LogicController;
 
+import java.util.Scanner;
+
 public class Hangman {
     public static void main(String[] args) {
 
