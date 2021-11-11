@@ -10,7 +10,6 @@ public class Hangman {
         fc.showMenuFrame();
 
         LogicController lc = LogicController.getInstance();
-        lc.createEmptySettings();
     }
 }
 
