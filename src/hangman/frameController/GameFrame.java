@@ -77,11 +77,205 @@ public class GameFrame extends JFrame {
         Util.setCentered(this);
     }
 
-    private void initializeButtons(){
-        aButton.addActionListener(new ActionListener() {
+    private void initializeButtons() {
+        aButton.addActionListener(e -> {
+            new ErrorDialog("A");
+        });
+
+        bButton.addActionListener(e -> {
+            ErrorDialog ed = new ErrorDialog("Б");
+        });
+
+        vButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ErrorDialog event = new ErrorDialog("Pressed \"a\"");
+                ErrorDialog ed = new ErrorDialog("В");
+            }
+        });
+
+        gButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Г");
+            }
+        });
+
+        dButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Д");
+            }
+        });
+
+        eButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Е");
+            }
+        });
+
+        zhButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ж");
+            }
+        });
+
+        zButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("З");
+            }
+        });
+
+        iButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("И");
+            }
+        });
+
+        ikButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Й");
+            }
+        });
+
+        kButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("К");
+            }
+        });
+
+        lButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Л");
+            }
+        });
+
+        mButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("М");
+            }
+        });
+
+        nButton.addActionListener(e -> {
+            ErrorDialog ed = new ErrorDialog("Н");
+        });
+
+        oButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("О");
+            }
+        });
+
+        pButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("П");
+            }
+        });
+
+        rButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Р");
+            }
+        });
+
+        sButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("С");
+            }
+        });
+
+        tButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Т");
+            }
+        });
+
+        uButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("У");
+            }
+        });
+
+        fButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ф");
+            }
+        });
+
+        hButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Х");
+            }
+        });
+
+        tzhButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ц");
+            }
+        });
+
+        chButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ч");
+            }
+        });
+
+        shButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ш");
+            }
+        });
+
+        shtButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Щ");
+            }
+        });
+
+        erGolyamButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ъ");
+            }
+        });
+
+        erMalakButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ь");
+            }
+        });
+
+        yuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Ю");
+            }
+        });
+
+        yaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ErrorDialog ed = new ErrorDialog("Я");
             }
         });
     }

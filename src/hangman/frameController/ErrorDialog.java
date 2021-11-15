@@ -53,8 +53,9 @@ public class ErrorDialog extends JDialog {
     }
 
     private void onAnyButtonClick() {
-        LogicController lc = LogicController.getInstance();
-        lc.terminateApp();
+//        LogicController lc = LogicController.getInstance();
+//        lc.terminateApp();
+        this.dispose();
     }
 
 }
