@@ -62,7 +62,7 @@ public class FrameController {
     }
 
     public void throwError(String message) {
-        ErrorDialog errorDialog = new ErrorDialog(message);
+        new ErrorDialog(message);
     }
 
     public void showGameFrame(){
