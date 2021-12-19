@@ -1,8 +1,12 @@
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,21 +15,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OnlineWordsFetcher {
-    private final HttpClient httpClient;
+    private final String CSV_DELIMITER = "|";
 
-    public OnlineWordsFetcher() {
+    private final HttpClient httpClient;
+    private Map<String, String> pairs;
+
+    public OnlineWordsFetcher(String wordMask) {
         this.httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
                 .build();
+        pairs = new LinkedHashMap<>();
+        fetchPairs(wordMask);
     }
 
-    public CsvData getWordsAsCsv(String wordMask) {
+    public String getWordsAsCsv() {
+        return getWordsAsCsv(pairs);
+    }
+
+    public boolean writeWordsAsCsvToDisk(String filename) {
+        String csv = getWordsAsCsv();
+        try {
+            writePairsAsCsv(csv, filename);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+
+    }
+
+    public Map<String,String> getWordsAsMap(){
+        return this.pairs;
+    }
+
+    private void fetchPairs(String wordMask) {
         HttpRequest request = buildHttpRequest(wordMask);
         HttpResponse<String> response = getResponse(request);
         List<String> rawPairs = getRawPairs(response);
-        Map<String, String> pairs = getWordDescriptionPairs(rawPairs);
-
-        return getPairsAsCsv(pairs);
+        pairs = getSanitizedPairs(rawPairs);
     }
 
     private HttpRequest buildHttpRequest(String wordMask) {
@@ -56,10 +82,9 @@ public class OnlineWordsFetcher {
         return rawPairs;
     }
 
-    private Map<String, String> getWordDescriptionPairs(List<String> rawPairs) {
+    private Map<String, String> getSanitizedPairs(List<String> rawPairs) {
         Map<String, String> pairs = new LinkedHashMap<>();
         for (String rawPair : rawPairs) {
-//<td><a href="https://www.funland.bg/words/АНФАС/">АНФАС</a></td>\r\n<td>положение на лице при рисуване</td>
 
             String word = rawPair.split("\r\n")[0]
                     .replace("<td>", "")
@@ -77,8 +102,24 @@ public class OnlineWordsFetcher {
         return pairs;
     }
 
-    private CsvData getPairsAsCsv(Map<String, String> pairs) {
-        return null;
+    private String getWordsAsCsv(Map<String, String> pairs) {
+        StringBuilder words = new StringBuilder();
+        for (Map.Entry<String, String> pair : pairs.entrySet()) {
+            String word = pair.getKey();
+            String description = pair.getValue();
+            words.append(word)
+                    .append(CSV_DELIMITER)
+                    .append(description)
+                    .append(System.lineSeparator());
+        }
+        return words.toString();
+    }
+
+    private void writePairsAsCsv(String csv, String filename) throws IOException {
+        File csvFile = new File(dbUtils.getCsvPath() + "\\" + filename);
+        FileOutputStream fos = new FileOutputStream(csvFile);
+        fos.write(csv.getBytes(StandardCharsets.UTF_8));
+        fos.close();
     }
 
     private String capitalizeFirstLetter(String s) {
