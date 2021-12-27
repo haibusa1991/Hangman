@@ -6,6 +6,7 @@ import com.sleepycat.je.EnvironmentConfig;
 
 
 import java.io.File;
+import java.sql.SQLData;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +18,19 @@ public class DatabaseCreator {
         owf.writeWordsAsCsvToDisk("csv1.csv");
         Map<String, String> words = owf.getWordsAsMap();
         System.out.println();
+
+
     }
 
-    private static void createDBfile() {
-        EnvironmentConfig environmentConfig = new EnvironmentConfig();
-        environmentConfig.setAllowCreate(true);
-        try {
-            Environment dbEnv = new Environment(new File(dbUtils.getdbOutputPath()), environmentConfig);
+    private static void initializeEnvironment() {
+        Environment dbEnv = null;
 
-            System.out.println("Created db at " + dbUtils.getdbOutputPath());
+        try {
+            EnvironmentConfig envConf = new EnvironmentConfig();
+            envConf.setAllowCreate(true);
+            envConf.
+            dbEnv = new Environment(new File(dbUtils.getdbOutputPath()), envConf);
+            System.out.println("Initialized db at " + dbUtils.getdbOutputPath());
         } catch (
                 DatabaseException e) {
             e.printStackTrace();
