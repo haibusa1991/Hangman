@@ -36,7 +36,7 @@ public class MenuFrame extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(menuFrame);
-        this.setIconImage(new FileHandler().getApplicationIcon());
+//        this.setIconImage(new FileHandler().getApplicationIcon());//todo fix path
         this.pack();
         this.setSize(WINDOW_SIZE);
         Utils.setCentered(this);

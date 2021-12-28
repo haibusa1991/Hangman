@@ -6,6 +6,7 @@ import gfxController.GfxPack;
 import logicController.LogicController;
 import logicController.Settings;
 import main.Hangman;
+import strings.Filenames;
 import utils.Utils;
 
 import javax.imageio.ImageIO;
@@ -20,31 +21,35 @@ import java.util.zip.InflaterInputStream;
 
 public class FileHandler implements Serializable {
 
-    public void writeSettingsToDisk(Settings settings) {
-        try {
-            FileOutputStream fos = new FileOutputStream("settings.dat");
-            ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
-            oos.writeObject(settings);
-            oos.close();
-            fos.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void writeSettingsToDisk(Settings settings) throws IOException {
+        String filename = Utils.getArtifactPath() + Filenames.SETTINGS_FILENAME;
+        FileOutputStream fos = new FileOutputStream(filename);
+        ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
+        oos.writeObject(settings);
+        oos.close();
+        fos.close();
+
     }
 
-    public Settings readSettingsFromDisk() {
-        try {
-            FileInputStream fis = new FileInputStream("settings.dat");
-            ObjectInputStream ois = new ObjectInputStream(new InflaterInputStream(fis));
-            Settings settings = (Settings) ois.readObject();
-            ois.close();
-            fis.close();
-            return settings;
-        } catch (Exception ex) {
-            System.out.println("returning new settings");
-            return new Settings();
+    public Settings readSettingsFromDisk() throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(Filenames.SETTINGS_FILENAME);
+        ObjectInputStream ois = new ObjectInputStream(new InflaterInputStream(fis));
+        Object objectFromDisk = ois.readObject();
+
+        Settings settings = null;
+        if (objectFromDisk instanceof Settings) {
+            settings = (Settings) objectFromDisk;
         }
+
+        ois.close();
+        fis.close();
+
+        if (settings == null) {
+            throw new StreamCorruptedException();
+        }
+        return settings;
     }
+
 
     private GfxPack loadHangmanGraphics() {
         try {

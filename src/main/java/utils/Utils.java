@@ -41,7 +41,13 @@ public class Utils {
         return getResourcesPath() + "/gfx.dat";
     }
 
-
+    public static String getArtifactPath(){
+        String fullPath = Hangman.class.getResource("Hangman.class").toString();
+//        jar:file:/D:/Repos/Hangman/bin/artifacts/Hangman_jar/Hangman.jar!/main/Hangman.class
+        int SYMBOLS_TO_TRIM_FROM_START=10;  //       "jar:file:/"
+        String f = Hangman.class.getProtectionDomain().getCodeSource().toString();
+        return null;
+    }
 
     public static void setUnderlined(JLabel label) {
         Font font = label.getFont();

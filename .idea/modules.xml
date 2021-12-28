@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Hangman.iml" filepath="$PROJECT_DIR$/Hangman.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LocalDatabase/LocalDatabase.iml" filepath="$PROJECT_DIR$/LocalDatabase/LocalDatabase.iml" />
     </modules>
   </component>
 </project>

@@ -1,8 +1,13 @@
 package logicController;
 
+/**
+ * StateRepository holds current state of the game, hence the name. It is responsible for
+ * settings state (load-save sequence included), current word, words played, load-save game sequence
+ */
 public class StateRepository {
     private static StateRepository instance = null;
     private Settings settings;
+
 
 
     private StateRepository() {
@@ -18,7 +23,8 @@ public class StateRepository {
 
     private void initializeState() {
         //todo initialize state
-        this.settings = LogicController.getInstance().readSettingsFromDisk();
+        SettingsManager sm = new SettingsManager();
+
     }
 
     public Difficulty getDifficulty() {

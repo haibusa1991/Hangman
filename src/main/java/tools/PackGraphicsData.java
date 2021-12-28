@@ -16,12 +16,13 @@ import java.util.zip.DeflaterOutputStream;
 public class PackGraphicsData implements Serializable {
 
     private final int NUMBER_OF_FRAMES = 14;
+    private final String PNG_SOURCE_PATH = "C:\\Java\\Hangman\\gfx sources\\";
 
     private GfxPack loadSourceImagesFromDisk() {
         try {
             GfxPack pack = new GfxPack();
             for (int i = 0; i < NUMBER_OF_FRAMES; i++) {
-                String filename = "D:\\Repos\\Hangman\\gfx sources\\hanged" + i + ".png";
+                String filename = PNG_SOURCE_PATH + "hanged" + i + ".png";
                 byte[] image = Files.readAllBytes(Paths.get(filename));
                 pack.add(i, image);
             }

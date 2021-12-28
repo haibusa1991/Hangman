@@ -5,6 +5,7 @@ import io.FileHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 
 public class LogicController {
@@ -30,9 +31,9 @@ public class LogicController {
         }
     }
 
-    public void saveSettingsToDisk(Settings settings) {
+    public void saveSettingsToDisk(Settings settings) throws IOException {
         FileHandler fh = new FileHandler();
-        fh.writeSettingsToDisk(settings);
+            fh.writeSettingsToDisk(settings);
     }
 
     public void openFunlandSite() {
