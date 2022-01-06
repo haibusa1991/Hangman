@@ -1,4 +1,4 @@
-package com.game.frameController;
+package com.logicController;
 
 import javax.swing.*;
 

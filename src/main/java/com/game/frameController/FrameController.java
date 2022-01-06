@@ -1,90 +1,65 @@
 package com.game.frameController;
 
+import com.game.gameController.GameController;
 import com.logicController.LogicController;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FrameController {
-    private static FrameController instance = null;
+    private List<Frame> activeFrames;
+//todo remove all static stuff on frames and make them inherit Frame interface
 
-    private FrameController() throws
-            UnsupportedLookAndFeelException,
-            ClassNotFoundException,
-            InstantiationException,
-            IllegalAccessException {
-        initialize();
-    }
-
-    private void initialize() throws
+    public FrameController() throws
             UnsupportedLookAndFeelException,
             ClassNotFoundException,
             InstantiationException,
             IllegalAccessException {
 
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        activeFrames = new ArrayList<>();
+    }
+
+    public void showFrame(Frame frame) {
+        frame.showFrame();
+    }
+
+    public void hideFrame(Frame frame) {
+        frame.hideFrame();
+    }
+
+    public void isolate(Frame frame) {
+//      executes hideFrame on all frames in activeFrames then removes from the collection
     }
 
     public void showMenuFrame() {
         MenuFrame.getInstance().showFrame();
     }
 
-
-    public static FrameController getInstance() throws
-            UnsupportedLookAndFeelException,
-            ClassNotFoundException,
-            InstantiationException,
-            IllegalAccessException {
-        if (instance == null) {
-            instance = new FrameController();
-        }
-        return instance;
-    }
-
     public void showAboutDialog() {
-        AboutDialog ad = AboutDialog.getInstance();
-        ad.showDialog();
+        new AboutDialog();
     }
 
-    private void isolateGameFrame() {
-        AboutDialog ad = AboutDialog.getInstance();
-        ad.dispose();
+//    private void isolateGameFrame() {
+//        closeAboutDialog();
+//        MenuFrame.getInstance().dispose();
+//        GameFrame.getInstance().showFrame();
+//    }
 
-        MenuFrame mf = MenuFrame.getInstance();
-        mf.dispose();
 
-        GameFrame gf = GameFrame.getInstance();
-        gf.showFrame();
-    }
+//    public void showGameFrame() {
+//        isolateGameFrame();
+//        GameController gameController = new GameController(GameFrame)
+//
+//        LogicController lc = LogicController.getInstance();
+//        BufferedImage bi = lc.readMockImage();
+//
+//        GameFrame gf = GameFrame.getInstance();
+//        gf.setMockImage(bi);
+//        gf.showFrame();
+//    }
 
-    public void closeAboutDialog() {
-        AboutDialog ad = AboutDialog.getInstance();
-        ad.dispose();
-    }
-
-    public void closeGameFrame() {
-        GameFrame.getInstance().close();
-    }
-
-    public void showSettingsDialog() {
-        SettingsDialog sd = SettingsDialog.getInstance();
-        sd.showDialog();
-    }
-
-    public void throwError(String message) {
-        new ErrorDialog(message);
-        LogicController.getInstance().terminateApp(); //todo comment out if necessary
-    }
-
-    public void showGameFrame() {
-        isolateGameFrame();
-
-        LogicController lc = LogicController.getInstance();
-        BufferedImage bi = lc.readMockImage();
-
-        GameFrame gf = GameFrame.getInstance();
-        gf.setMockImage(bi);
-        gf.showFrame();
-    }
 
 }

@@ -1,5 +1,6 @@
 package com.game.frameController;
 
+import com.logicController.ErrorDialog;
 import com.logicController.LogicController;
 import com.utils.Utils;
 

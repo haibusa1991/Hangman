@@ -12,9 +12,7 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <text value="(C) Pacek-Macek 2021"/>
-        </properties>
+        <properties/>
       </component>
       <hspacer id="d82ae">
         <constraints>
@@ -42,7 +40,6 @@
         <properties>
           <enabled value="true"/>
           <foreground color="-16777029"/>
-          <text value="http://github.com/haibusa1991"/>
         </properties>
       </component>
       <hspacer id="5510">

@@ -7,26 +7,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class AboutDialog extends JDialog {
+import static com.strings.AboutDialogStrings.*;
+
+public class AboutDialog extends JDialog implements Frame {
     private JPanel aboutFrame;
     private JLabel label_info;
     private JLabel label_version;
     private JLabel label_github;
-    private static AboutDialog instance = null;
     private final Dimension WINDOW_SIZE = new Dimension(200, 200);
 
-    protected static AboutDialog getInstance() {
-        if (instance == null) {
-            instance = new AboutDialog();
-        }
-        return instance;
-    }
-
-    private AboutDialog() {
+    public AboutDialog() {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setContentPane(aboutFrame);
         this.setSize(WINDOW_SIZE);
+
+        this.setName(ABOUT_DIALOG_TITLE);
+        this.label_info.setText(ABOUT_DIALOG_AUTHOR);
+        this.label_github.setText(ABOUT_DIALOG_GITHUB_LINK);
+        this.label_version.setText(ABOUT_DIALOG_VERSION);
+
         label_github.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -48,13 +48,27 @@ public class AboutDialog extends JDialog {
                 }
             }
         });
+
+
     }
 
-    protected void showDialog() {
-        if (!this.isVisible()) {
-            Utils.setCentered(this);
-            this.setVisible(true);
-        }
+    @Override
+    public void showFrame() {
+        this.setVisible(true);
     }
 
+    @Override
+    public void hideFrame() {
+        this.dispose();
+    }
+
+    @Override
+    public void gainsFocus() {
+
+    }
+
+    @Override
+    public void losesFocus() {
+
+    }
 }

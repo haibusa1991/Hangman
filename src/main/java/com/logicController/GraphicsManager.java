@@ -1,22 +1,43 @@
 package com.logicController;
 
-import java.util.Iterator;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
-public class GraphicsManager implements Iterable{
 
+public class GraphicsManager {
+    private List<BufferedImage> images;
+    private GraphicsPackage graphicsPackage;
 
-    @Override
-    public Iterator iterator() {
-        return new Iterator() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
-
-            @Override
-            public Object next() {
-                return null;
-            }
-        };
+    public GraphicsManager() throws IOException, ClassNotFoundException {
+        loadGraphicsFromDisk();
+        initializeImages();
     }
+
+    private void loadGraphicsFromDisk() throws IOException, ClassNotFoundException {
+        FileHandler fileHandler = new FileHandler();
+        graphicsPackage = fileHandler.readGraphicsFromDisk();
+    }
+
+    private void initializeImages() {
+        for (Map.Entry<Integer, byte[]> byteImage : graphicsPackage.getContents().entrySet()) {
+            try {
+                BufferedImage image = ImageIO.read(new ByteArrayInputStream(byteImage.getValue()));
+                images.add(image);
+            } catch (IOException ignored) {
+            }
+        }
+    }
+
+    public BufferedImage getImage(int index) {
+        if (index < 0 || index >= images.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return images.get(index);
+    }
+
+
 }

@@ -1,44 +1,38 @@
 package com.logicController;
 
-import com.gfxController.GfxController;
-import com.io.FileHandler;
+import com.game.frameController.FrameController;
+import com.game.frameController.GameFrame;
+import com.game.frameController.MenuFrame;
+import com.strings.Urls;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 
 public class LogicController {
     private static LogicController instance = null;
 
-    private LogicController() {
+    private StateRepository stateRepository;
+    private SettingsManager settingsManager;
+    private FrameController frameController;
 
+    private LogicController() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        stateRepository = new StateRepository();
+        settingsManager = new SettingsManager();
+        frameController = new FrameController();
     }
 
-    public static LogicController getInstance() {
+
+    public static LogicController getInstance() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         if (instance == null) {
             instance = new LogicController();
         }
         return instance;
     }
 
-    public Settings readSettingsFromDisk() {
-        FileHandler fh = new FileHandler();
-        try {
-            return fh.readSettingsFromDisk();
-        } catch (Exception ex) {
-            return new Settings();
-        }
-    }
-
-    public void saveSettingsToDisk(Settings settings) throws IOException {
-        FileHandler fh = new FileHandler();
-        fh.writeSettingsToDisk(settings);
-    }
-
     public void openFunlandSite() {
         try {
-            Desktop.getDesktop().browse(new URL("http://funland.bg").toURI());
+            Desktop.getDesktop().browse(new URL(Urls.FUNLAND_URL).toURI());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -46,25 +40,18 @@ public class LogicController {
 
     public void openGithub() {
         try {
-            Desktop.getDesktop().browse(new URL("https://github.com/haibusa1991").toURI());
+            Desktop.getDesktop().browse(new URL(Urls.GITHUB_URL).toURI());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public void terminateApp() {
+    public void showMenu(){
+        this.frameController.showFrame(new MenuFrame());
+    }
+
+    public static void terminateApp() {
         System.exit(0);
     }
-
-//    public void createEmptySettings() {
-//        FileHandler fh = new FileHandler();
-//        fh.writeToDisk(new Settings());
-//    }
-
-    public BufferedImage readMockImage() {
-        GfxController gfx = GfxController.getInstance();
-        return gfx.getMockImage();
-    }
-
 
 }

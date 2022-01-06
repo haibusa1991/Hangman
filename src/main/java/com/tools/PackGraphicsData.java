@@ -1,8 +1,8 @@
 package com.tools;
 
 import com.utils.Utils;
-import com.io.FileHandler;
-import com.gfxController.GfxPack;
+import com.logicController.FileHandler;
+import com.logicController.GraphicsPackage;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -18,9 +18,9 @@ public class PackGraphicsData implements Serializable {
     private final int NUMBER_OF_FRAMES = 14;
     private final String PNG_SOURCE_PATH = "C:\\Java\\Hangman\\gfx sources\\";
 
-    private GfxPack loadSourceImagesFromDisk() {
+    private GraphicsPackage loadSourceImagesFromDisk() {
         try {
-            GfxPack pack = new GfxPack();
+            GraphicsPackage pack = new GraphicsPackage();
             for (int i = 0; i < NUMBER_OF_FRAMES; i++) {
                 String filename = PNG_SOURCE_PATH + "hanged" + i + ".png";
                 byte[] image = Files.readAllBytes(Paths.get(filename));
@@ -29,11 +29,11 @@ public class PackGraphicsData implements Serializable {
             return pack;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new GfxPack();
+            return new GraphicsPackage();
         }
     }
 
-    private void savePackedImagesToDisk(GfxPack pack) {
+    private void savePackedImagesToDisk(GraphicsPackage pack) {
         try {
             String target = Utils.getGraphicsPath();
             FileOutputStream fos = new FileOutputStream(Utils.getGraphicsPath());
@@ -48,7 +48,7 @@ public class PackGraphicsData implements Serializable {
 
     public static void main(String[] args) {
         PackGraphicsData packGraphicsData = new PackGraphicsData();
-        GfxPack gfxPack = packGraphicsData.loadSourceImagesFromDisk();
+        GraphicsPackage gfxPack = packGraphicsData.loadSourceImagesFromDisk();
         packGraphicsData.savePackedImagesToDisk(gfxPack);
         FileHandler fileHandler= new FileHandler();
         List<BufferedImage> images = fileHandler.loadGfx();

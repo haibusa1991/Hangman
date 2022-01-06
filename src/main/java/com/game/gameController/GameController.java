@@ -1,18 +1,11 @@
 package com.game.gameController;
 
+import com.game.frameController.GameFrame;
+
 public class GameController {
-    private static GameController instance = null;
 
-    private GameController(){
+    public GameController(GameFrame gameFrame){
 
     }
-
-    public GameController getInstance(){
-        if(instance==null){
-            instance=new GameController();
-        }
-        return instance;
-    }
-
 
 }

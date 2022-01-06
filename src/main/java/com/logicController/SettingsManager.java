@@ -1,7 +1,5 @@
 package com.logicController;
 
-import com.io.FileHandler;
-
 import java.io.IOException;
 
 public class SettingsManager {
