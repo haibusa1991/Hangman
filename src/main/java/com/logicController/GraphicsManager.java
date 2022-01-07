@@ -13,13 +13,8 @@ public class GraphicsManager {
     private GraphicsPackage graphicsPackage;
 
     public GraphicsManager() throws IOException, ClassNotFoundException {
-        loadGraphicsFromDisk();
+        graphicsPackage = new FileHandler().readGraphicsFromDisk();
         initializeImages();
-    }
-
-    private void loadGraphicsFromDisk() throws IOException, ClassNotFoundException {
-        FileHandler fileHandler = new FileHandler();
-        graphicsPackage = fileHandler.readGraphicsFromDisk();
     }
 
     private void initializeImages() {

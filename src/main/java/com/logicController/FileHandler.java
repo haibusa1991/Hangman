@@ -1,5 +1,6 @@
 package com.logicController;
 
+import com.main.Hangman;
 import com.strings.ErrorMessages;
 import com.strings.Filenames;
 import com.utils.Utils;
@@ -10,7 +11,7 @@ import java.io.*;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
-public class FileHandler{
+public class FileHandler {
 
     public void writeSettingsToDisk(Settings settings) throws IOException {
         String filename = Utils.getArtifactPath() + Filenames.SETTINGS_FILENAME;
@@ -19,7 +20,6 @@ public class FileHandler{
         oos.writeObject(settings);
         oos.close();
         fos.close();
-
     }
 
     public Settings readSettingsFromDisk() throws IOException, ClassNotFoundException {
@@ -45,6 +45,36 @@ public class FileHandler{
     public GraphicsPackage readGraphicsFromDisk() throws IOException, ClassNotFoundException {
 
         InputStream graphics = this.getClass().getResourceAsStream(Filenames.GRAPHICS_FILENAME);
+        if (graphics == null) {
+            throw new IllegalStateException(ErrorMessages.GFX_FILE_NOT_FOUND);
+        }
+
+        ObjectInputStream ois;
+        try {
+            ois = new ObjectInputStream(new InflaterInputStream(graphics));
+        } catch (StreamCorruptedException e1) {
+            throw new StreamCorruptedException(ErrorMessages.GFX_FILE_CORRUPTED);
+        } catch (IOException e2) {
+            throw new IOException(ErrorMessages.GFX_FILE_INACCESSIBLE);
+        }
+
+        GraphicsPackage graphicsPackage;
+        try {
+            graphicsPackage = (GraphicsPackage) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            throw new ClassNotFoundException(ErrorMessages.GFX_FILE_INTERNAL_ERROR);
+        }
+
+        ois.close();
+        graphics.close();
+        return graphicsPackage;
+    }
+
+    public GraphicsPackage readGraphicsFromDiskDebug() throws IOException, ClassNotFoundException {
+        String HARDCODED_PATH = "D:\\Repos\\Hangman\\target\\classes\\com\\resources\\gfx.dat";
+
+//        InputStream graphics = this.getClass().getResourceAsStream(HARDCODED_PATH);
+        FileInputStream graphics = new FileInputStream(HARDCODED_PATH);
         if (graphics == null) {
             throw new IllegalStateException(ErrorMessages.GFX_FILE_NOT_FOUND);
         }

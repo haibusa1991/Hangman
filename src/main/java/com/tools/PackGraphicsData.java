@@ -4,19 +4,22 @@ import com.utils.Utils;
 import com.logicController.FileHandler;
 import com.logicController.GraphicsPackage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
 
 public class PackGraphicsData implements Serializable {
 
     private final int NUMBER_OF_FRAMES = 14;
-    private final String PNG_SOURCE_PATH = "C:\\Java\\Hangman\\gfx sources\\";
+    private final String PNG_SOURCE_PATH = "D:\\Repos\\Hangman\\gfx sources\\";
 
     private GraphicsPackage loadSourceImagesFromDisk() {
         try {
@@ -35,7 +38,6 @@ public class PackGraphicsData implements Serializable {
 
     private void savePackedImagesToDisk(GraphicsPackage pack) {
         try {
-            String target = Utils.getGraphicsPath();
             FileOutputStream fos = new FileOutputStream(Utils.getGraphicsPath());
             ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
             oos.writeObject(pack);
@@ -46,20 +48,37 @@ public class PackGraphicsData implements Serializable {
         }
     }
 
+    public List<BufferedImage> loadGfx(GraphicsPackage graphics) {
+        List<BufferedImage> output = new ArrayList<>();
+        for (Map.Entry<Integer, byte[]> byteImage : graphics.getContents().entrySet()) {
+            try {
+                BufferedImage image = ImageIO.read(new ByteArrayInputStream(byteImage.getValue()));
+                output.add(image);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return output;
+    }
+
     public static void main(String[] args) {
         PackGraphicsData packGraphicsData = new PackGraphicsData();
         GraphicsPackage gfxPack = packGraphicsData.loadSourceImagesFromDisk();
         packGraphicsData.savePackedImagesToDisk(gfxPack);
-        FileHandler fileHandler= new FileHandler();
-        List<BufferedImage> images = fileHandler.loadGfx();
+        FileHandler fileHandler = new FileHandler();
+
+
         try {
+            GraphicsPackage graphics = fileHandler.readGraphicsFromDiskDebug();
+            List<BufferedImage> images = packGraphicsData.loadGfx(graphics);
+
             JFrame frame = new JFrame("Image");
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             JLabel currentImage = new JLabel(new ImageIcon(images.get(0)));
             frame.add(currentImage);
             frame.setSize(500, 800);
             frame.setResizable(false);
-            Utils.setCentered(frame);
+            Utils.centerFrame(frame);
             frame.setVisible(true);
             for (BufferedImage image : images) {
                 currentImage.setIcon(new ImageIcon(image));

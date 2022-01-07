@@ -22,240 +22,181 @@
             </constraints>
             <properties>
               <horizontalTextPosition value="2"/>
-              <text value="А"/>
             </properties>
           </component>
           <component id="39fa8" class="javax.swing.JButton" binding="rButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Р"/>
-            </properties>
+            <properties/>
           </component>
           <component id="70e80" class="javax.swing.JButton" binding="shButton">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ш"/>
-            </properties>
+            <properties/>
           </component>
           <component id="8d0fa" class="javax.swing.JButton" binding="bButton">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Б"/>
-            </properties>
+            <properties/>
           </component>
           <component id="6b0e0" class="javax.swing.JButton" binding="gButton">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Г"/>
-            </properties>
+            <properties/>
           </component>
           <component id="33619" class="javax.swing.JButton" binding="dButton">
             <constraints>
               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Д"/>
-            </properties>
+            <properties/>
           </component>
           <component id="b8512" class="javax.swing.JButton" binding="eButton">
             <constraints>
               <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Е"/>
-            </properties>
+            <properties/>
           </component>
           <component id="631a7" class="javax.swing.JButton" binding="zhButton">
             <constraints>
               <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ж"/>
-            </properties>
+            <properties/>
           </component>
           <component id="3b535" class="javax.swing.JButton" binding="zButton">
             <constraints>
               <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="З"/>
-            </properties>
+            <properties/>
           </component>
           <component id="96d7c" class="javax.swing.JButton" binding="vButton">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="В"/>
-            </properties>
+            <properties/>
           </component>
           <component id="ba631" class="javax.swing.JButton" binding="kButton">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="К"/>
-            </properties>
+            <properties/>
           </component>
           <component id="8650b" class="javax.swing.JButton" binding="ikButton">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Й"/>
-            </properties>
+            <properties/>
           </component>
           <component id="efe45" class="javax.swing.JButton" binding="sButton">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="С"/>
-            </properties>
+            <properties/>
           </component>
           <component id="641d3" class="javax.swing.JButton" binding="shtButton">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Щ"/>
-            </properties>
+            <properties/>
           </component>
           <component id="205c6" class="javax.swing.JButton" binding="lButton">
             <constraints>
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Л"/>
-            </properties>
+            <properties/>
           </component>
           <component id="4f181" class="javax.swing.JButton" binding="mButton">
             <constraints>
               <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="М"/>
-            </properties>
+            <properties/>
           </component>
           <component id="9d374" class="javax.swing.JButton" binding="nButton">
             <constraints>
               <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Н"/>
-            </properties>
+            <properties/>
           </component>
           <component id="15a69" class="javax.swing.JButton" binding="oButton">
             <constraints>
               <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="О"/>
-            </properties>
+            <properties/>
           </component>
           <component id="47ed6" class="javax.swing.JButton" binding="pButton">
             <constraints>
               <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="П"/>
-            </properties>
+            <properties/>
           </component>
           <component id="9eb6a" class="javax.swing.JButton" binding="tButton">
             <constraints>
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Т"/>
-            </properties>
+            <properties/>
           </component>
           <component id="f8d7" class="javax.swing.JButton" binding="uButton">
             <constraints>
               <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="У"/>
-            </properties>
+            <properties/>
           </component>
           <component id="ce950" class="javax.swing.JButton" binding="fButton">
             <constraints>
               <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ф"/>
-            </properties>
+            <properties/>
           </component>
           <component id="7a206" class="javax.swing.JButton" binding="hButton">
             <constraints>
               <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Х"/>
-            </properties>
+            <properties/>
           </component>
           <component id="5647b" class="javax.swing.JButton" binding="tzhButton">
             <constraints>
               <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ц"/>
-            </properties>
+            <properties/>
           </component>
           <component id="3cb2c" class="javax.swing.JButton" binding="chButton">
             <constraints>
               <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ч"/>
-            </properties>
+            <properties/>
           </component>
           <component id="50f7a" class="javax.swing.JButton" binding="erGolyamButton">
             <constraints>
               <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ъ"/>
-            </properties>
+            <properties/>
           </component>
           <component id="4695b" class="javax.swing.JButton" binding="erMalakButton">
             <constraints>
               <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ь"/>
-            </properties>
+            <properties/>
           </component>
           <component id="993f0" class="javax.swing.JButton" binding="yuButton">
             <constraints>
               <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Ю"/>
-            </properties>
+            <properties/>
           </component>
           <component id="92f6" class="javax.swing.JButton" binding="yaButton">
             <constraints>
               <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Я"/>
-            </properties>
+            <properties/>
           </component>
           <component id="ffda8" class="javax.swing.JButton" binding="iButton">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="И"/>
-            </properties>
+            <properties/>
           </component>
           <vspacer id="2dd20">
             <constraints>
@@ -268,17 +209,13 @@
             <constraints>
               <grid row="5" column="6" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Изход"/>
-            </properties>
+            <properties/>
           </component>
           <component id="50fc2" class="javax.swing.JButton" binding="newGameButton">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Нова игра"/>
-            </properties>
+            <properties/>
           </component>
           <hspacer id="d83de">
             <constraints>
@@ -289,9 +226,7 @@
             <constraints>
               <grid row="5" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value="Главно меню"/>
-            </properties>
+            <properties/>
           </component>
         </children>
       </grid>
@@ -302,13 +237,12 @@
           </grid>
         </constraints>
       </vspacer>
-      <component id="3ad85" class="javax.swing.JLabel">
+      <component id="3ad85" class="javax.swing.JLabel" binding="wordLetters">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="32"/>
-          <text value="_ _ _ _ _"/>
         </properties>
       </component>
       <vspacer id="bc533">
@@ -318,13 +252,11 @@
           </grid>
         </constraints>
       </vspacer>
-      <component id="ed85e" class="javax.swing.JLabel">
+      <component id="ed85e" class="javax.swing.JLabel" binding="wordDescription">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <text value="Футболен отбор от Великобритания"/>
-        </properties>
+        <properties/>
       </component>
       <vspacer id="859b0">
         <constraints>
@@ -389,13 +321,11 @@
           </grid>
         </constraints>
       </hspacer>
-      <component id="132a7" class="javax.swing.JLabel">
+      <component id="132a7" class="javax.swing.JLabel" binding="labelUsedLetters">
         <constraints>
           <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <text value="Използвани букви: "/>
-        </properties>
+        <properties/>
       </component>
       <vspacer id="35a94">
         <constraints>

@@ -1,5 +1,6 @@
 package com.game.frameController;
 
+import com.interfaces.Frame;
 import com.logicController.LogicController;
 import com.utils.Utils;
 
@@ -7,8 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MenuFrame extends JFrame {
-    static MenuFrame instance = null;
+import static com.strings.MenuFrameStrings.*;
+
+public class MenuFrame extends JFrame implements Frame {
 
     private JPanel menuFrame;
 
@@ -22,113 +24,101 @@ public class MenuFrame extends JFrame {
 
     private final Dimension WINDOW_SIZE = new Dimension(250, 400);
 
-    protected static MenuFrame getInstance() {
-        if (instance == null) {
-            instance = new MenuFrame();
-        }
-        attachWindowListener();
-        return instance;
+    public MenuFrame() {
+        initializeFrame();
+        attachListeners();
+//        attachWindowListener();
+        initializeText();
     }
 
-    private MenuFrame() {
-        super("Hangman");
+    private void initializeFrame() {
+
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(menuFrame);
-//        this.setIconImage(new FileHandler().getApplicationIcon());//todo fix path
+//        this.setIconImage(new FileHandler().getApplicationIcon());//todo fix path and implementation
         this.pack();
         this.setSize(WINDOW_SIZE);
-        Utils.setCentered(this);
+        Utils.centerFrame(this);
+    }
 
-        button_exit.addActionListener(new ActionListener() {
+    private void attachWindowListener() {
+        this.addWindowFocusListener(new WindowFocusListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    LogicController lc = LogicController.getInstance();
-                    lc.terminateApp();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+            public void windowGainedFocus(WindowEvent e) {
+                gainsFocus();
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                losesFocus();
             }
         });
+    }
 
-        button_about.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    FrameController fc = FrameController.getInstance();
-                    fc.showAboutDialog();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+    private void attachListeners() {
+
+        this.button_newGame.addActionListener(e -> LogicController.getInstance().menuButtonClickNewGame());
+
+        this.button_continueGame.addActionListener(e -> LogicController.getInstance().menuButtonClickContinueGame());
+
+        this.button_settings.addActionListener(e -> LogicController.getInstance().menuButtonClickSettings());
+
+        this.button_about.addActionListener(e -> LogicController.getInstance().menuButtonClickAbout());
+
+        button_exit.addActionListener(e -> LogicController.getInstance().menuButtonClickExit());
+
         label_poweredBy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                LogicController.getInstance().openFunlandSite();
+                LogicController.getInstance().menuLabelClickFunland();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 label_poweredBy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                Utils.setUnderlined(label_poweredBy);
+                Utils.addUnderline(label_poweredBy);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 label_poweredBy.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                Utils.setPlain(label_poweredBy);
+                Utils.removeUnderline(label_poweredBy);
             }
         });
 
-        button_settings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    FrameController fc = FrameController.getInstance();
-                    fc.showSettingsDialog();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        this.button_newGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {//todo refactor this
-
-                    FrameController fc = FrameController.getInstance();
-                    fc.showGameFrame();
-                } catch (Exception ignored) {
-                }
-            }
-        });
     }
 
-    private static void attachWindowListener() {
-        instance.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-                try {//todo refactor
+    private void initializeText() {
+        this.setTitle(MENU_TITLE);
 
-                    FrameController fc = FrameController.getInstance();
-                    fc.closeAboutDialog();
-                } catch (Exception ignored) {
-                }
-            }
+        this.button_newGame.setText(MENU_NEW_GAME);
+        this.button_continueGame.setText(MENU_CONTINUE_GAME);
+        this.button_settings.setText(MENU_SETTINGS);
+        this.button_about.setText(MENU_ABOUT);
+        this.button_exit.setText(MENU_EXIT);
 
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                //clean up later perhaps
-            }
-        });
+        this.label_poweredBy.setText(MENU_POWERED_BY_FUNLAND);
     }
 
-    protected void showFrame() {
-        if (!this.isVisible()) {
-            this.setVisible(true);
-        }
+    @Override
+    public void showFrame() {
+        this.setVisible(true);
+    }
+
+    @Override
+    public void hideFrame() {
+        this.dispose();
+    }
+
+    @Override
+    public void gainsFocus() {
+        //todo implement what happens on window focus gain - discards settings if changed; closes about dialog
+        //LogicController.getInstance().isolateFrame(this);
+    }
+
+    @Override
+    public void losesFocus() {
+        //todo implement what happens on window focus loss
     }
 }

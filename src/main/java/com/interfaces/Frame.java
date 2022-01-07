@@ -1,4 +1,4 @@
-package com.game.frameController;
+package com.interfaces;
 
 public interface Frame {
 

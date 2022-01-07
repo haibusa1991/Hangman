@@ -10,13 +10,13 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 public class Utils {
-    public static void setCentered(JFrame frame) {
+    public static void centerFrame(JFrame frame) {
         Dimension d = frame.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight() / 2));
     }
 
-    public static void setCentered(JDialog dialog) {
+    public static void centerFrame(JDialog dialog) {
         Dimension d = dialog.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         dialog.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight() / 2));
@@ -48,14 +48,14 @@ public class Utils {
         return null;
     }
 
-    public static void setUnderlined(JLabel label) {
+    public static void addUnderline(JLabel label) {
         Font font = label.getFont();
         Map attributes = font.getAttributes();
-        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        attributes.put(TextAttribute.UNDERLINE,TextAttribute.UNDERLINE_ON);
         label.setFont(font.deriveFont(attributes));
     }
 
-    public static void setPlain(JLabel label) {
+    public static void removeUnderline(JLabel label) {
         Font font = label.getFont();
         Map attributes = font.getAttributes();
         attributes.put(TextAttribute.UNDERLINE, null);
@@ -71,5 +71,6 @@ public class Utils {
 
         return dimg;
     }
+
 
 }

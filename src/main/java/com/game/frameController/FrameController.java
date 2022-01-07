@@ -1,15 +1,13 @@
 package com.game.frameController;
 
-import com.game.gameController.GameController;
-import com.logicController.LogicController;
+import com.interfaces.Frame;
 
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FrameController {
-    private List<Frame> activeFrames;
+    private List<Frame> visibleFrames;
 //todo remove all static stuff on frames and make them inherit Frame interface
 
     public FrameController() throws
@@ -19,7 +17,7 @@ public class FrameController {
             IllegalAccessException {
 
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        activeFrames = new ArrayList<>();
+        visibleFrames = new ArrayList<>();
     }
 
     public void showFrame(Frame frame) {
@@ -31,16 +29,16 @@ public class FrameController {
     }
 
     public void isolate(Frame frame) {
-//      executes hideFrame on all frames in activeFrames then removes from the collection
+//      executes hideFrame on all frames in visibleFrames then removes them from the collection
     }
 
-    public void showMenuFrame() {
-        MenuFrame.getInstance().showFrame();
-    }
+//    public void showMenuFrame() {
+//        MenuFrame.getInstance().showFrame();
+//    }
 
-    public void showAboutDialog() {
-        new AboutDialog();
-    }
+//    public void showAboutDialog() {
+//        new AboutDialog();
+//    }
 
 //    private void isolateGameFrame() {
 //        closeAboutDialog();
