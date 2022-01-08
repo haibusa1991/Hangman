@@ -1,6 +1,6 @@
 package com.io;
 
-import com.game.gameController.Word;
+import com.gameController.Word;
 
 import java.io.IOException;
 import java.net.*;

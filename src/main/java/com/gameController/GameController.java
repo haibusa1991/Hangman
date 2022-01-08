@@ -1,6 +1,6 @@
-package com.game.gameController;
+package com.gameController;
 
-import com.game.frameController.GameFrame;
+import com.frames.GameFrame;
 
 public class GameController {
 

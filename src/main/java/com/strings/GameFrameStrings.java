@@ -42,8 +42,8 @@ public class GameFrameStrings {
     public final static String GAMEFRAME_EXIT = "Exit";
     public final static String GAMEFRAME_NEW_GAME = "New game";
     public final static String GAMEFRAME_MAIN_MENU = "Menu";
-    public final static String GAMEFRAME_WORD_DESCRIPTION = "Word description placeholder";
-    public final static String GAMEFRAME_WORD = "Word placeholder";
+    public final static String GAMEFRAME_WORD_DESCRIPTION = "Word description goes here";
+    public final static String GAMEFRAME_WORD = "Word goes here";
     public final static String GAMEFRAME_LETTERS_USED = "Letters used:";
 
 }

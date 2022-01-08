@@ -1,16 +1,15 @@
 package com.logicController;
 
-import com.game.frameController.AboutDialog;
-import com.game.frameController.FrameController;
-import com.game.frameController.MenuFrame;
-import com.game.frameController.SettingsDialog;
+import com.commands.*;
+import com.dialogs.ErrorDialog;
+import com.dialogs.InfoDialog;
+import com.dialogs.SaveGameConfirmationDialog;
+import com.frames.SettingsFrame;
 import com.strings.Urls;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 public class LogicController {
@@ -21,7 +20,12 @@ public class LogicController {
     private FrameController frameController;
     private GraphicsManager graphicsManager;
 
-    private LogicController() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+    private LogicController() throws
+            UnsupportedLookAndFeelException,
+            ClassNotFoundException,
+            InstantiationException,
+            IllegalAccessException,
+            IOException {
         stateRepository = new StateRepository();
         settingsManager = new SettingsManager();
         frameController = new FrameController();
@@ -32,6 +36,7 @@ public class LogicController {
         if (instance == null) {
             try {
                 instance = new LogicController();
+                instance.showMenu();
             } catch (Exception e) {
                 new ErrorDialog(e.getMessage());
             }
@@ -56,8 +61,8 @@ public class LogicController {
 
     }
 
-    public void showMenu() {
-        this.frameController.showFrame(new MenuFrame());
+    private void showMenu() {
+        this.frameController.showFrame(new ShowMenuFrameCommand());
     }
 
     public static void terminateApp() {
@@ -69,8 +74,12 @@ public class LogicController {
         new InfoDialog(String.format("You pressed the %s letter!", letter));
     }
 
-    public void aboutDialogLabelClick() {
+    public void aboutFrameLabelClick() {
         openGithubLink();
+    }
+
+    public void aboutFrameIsClosed() {
+        this.frameController.hideFrame(new HideAboutFrameCommand());
     }
 
     public void gameFrameButtonClickExit() {
@@ -86,32 +95,48 @@ public class LogicController {
         //todo implement
     }
 
-    public void menuButtonClickNewGame() {
+    public void menuFrameGainsFocus() {
+        aboutFrameIsClosed();
+    }
+
+    public void menuFrameButtonClickNewGame() {
+        //todo implement
+        new InfoDialog("you clicked New game.");
+    }
+
+    public void menuFrameButtonClickContinueGame() {
         //todo implement
     }
 
-    public void menuButtonClickContinueGame() {
-        //todo implement
+    public void menuFrameButtonClickSettings() {
+        this.frameController.showFrame(new ShowSettingFrameCommand());
     }
 
-    public void menuButtonClickSettings() {
-        //todo implement
+    public void menuFrameButtonClickAbout() {
+        this.frameController.showFrame(new ShowAboutFrameCommand());
     }
 
-    public void menuButtonClickAbout() {
-        //todo implement
-    }
-
-    public void menuButtonClickExit() {
+    public void menuFrameButtonClickExit() {
         terminateApp();
     }
 
-    public void menuLabelClickFunland() {
+    public void menuFrameLabelClickFunland() {
         openFunlandSite();
     }
 
-    public void settingsButtonClickSave(SettingsDialog settingsDialog) {
-        //todo implement - should update state of state manager
+    public void settingsFrameButtonClickSave(Settings settings) {
+        System.out.println("settingsFrameButtonClickSave");
+        this.settingsManager.setSettings(settings);
+        settingsFrameIsClosed();
+    }
 
+    public void settingsFrameIsClosed() {
+        this.frameController.hideFrame(new HideSettingsFrameCommand());
+        System.out.println("settingsFrameIsClosed");
+    }
+
+    public Settings getSettings() {
+        return this.settingsManager.getSettings();
     }
 }
+

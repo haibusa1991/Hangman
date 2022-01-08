@@ -1,4 +1,4 @@
-package com.logicController;
+package com.enums;
 
 public enum Difficulty {
     EASY,

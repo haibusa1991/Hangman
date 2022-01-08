@@ -1,5 +1,7 @@
 package com.logicController;
 
+import com.enums.Difficulty;
+
 import java.io.Serializable;
 
 public class Settings implements Serializable {

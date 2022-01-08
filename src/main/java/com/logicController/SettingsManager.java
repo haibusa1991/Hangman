@@ -1,5 +1,6 @@
 package com.logicController;
 
+
 import java.io.IOException;
 
 public class SettingsManager {
@@ -10,41 +11,23 @@ public class SettingsManager {
     }
 
     private void readSettingsFromDisk() {
-        FileHandler fh = new FileHandler();
         try {
-            this.settings = fh.readSettingsFromDisk();
+            this.settings = new FileHandler().readSettingsFromDisk();
         } catch (Exception e) {
             this.settings = new Settings();
         }
     }
 
     private void saveSettingsToDisk(Settings settings) throws IOException {
-        FileHandler fh = new FileHandler();
-        fh.writeSettingsToDisk(settings);
+        new FileHandler().writeSettingsToDisk(settings);
     }
 
-    public Difficulty getDifficulty() {
-        return this.settings.difficulty;
+    public Settings getSettings() {
+        return settings;
     }
 
-    public boolean getIsOnline() {
-        return this.settings.isOnline;
-    }
-
-    public boolean getDoesSaveOnExit() {
-        return this.settings.doesSaveOnExit;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.settings.difficulty = difficulty;
-    }
-
-    public void setIsOnline(boolean value) {
-        this.settings.isOnline = value;
-    }
-
-    public void setDoesSaveOnExit(boolean value) {
-        this.settings.doesSaveOnExit = value;
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }
 

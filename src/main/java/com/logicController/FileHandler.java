@@ -1,6 +1,6 @@
 package com.logicController;
 
-import com.main.Hangman;
+import com.dialogs.ErrorDialog;
 import com.strings.ErrorMessages;
 import com.strings.Filenames;
 import com.utils.Utils;

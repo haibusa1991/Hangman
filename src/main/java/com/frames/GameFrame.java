@@ -1,6 +1,7 @@
-package com.game.frameController;
+package com.frames;
 
-import com.interfaces.Frame;
+import com.enums.FrameType;
+import com.interfaces.HangmanFrame;
 import com.logicController.LogicController;
 import com.strings.GameFrameStrings;
 import com.utils.Utils;
@@ -15,7 +16,7 @@ import java.util.List;
 import static com.strings.GameFrameStrings.*;
 import static com.strings.ErrorMessages.*;
 
-public class GameFrame extends JFrame implements Frame {
+public class GameFrame extends JFrame implements HangmanFrame {
     private JPanel defaultPanel;
 
     private List<JButton> letters;
@@ -192,12 +193,8 @@ public class GameFrame extends JFrame implements Frame {
     }
 
     @Override
-    public void gainsFocus() {
-
+    public FrameType getFrameType() {
+        return FrameType.GAME_FRAME;
     }
 
-    @Override
-    public void losesFocus() {
-
-    }
 }

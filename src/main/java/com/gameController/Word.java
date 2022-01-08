@@ -1,4 +1,4 @@
-package com.game.gameController;
+package com.gameController;
 
 public class Word {
     private final String word;

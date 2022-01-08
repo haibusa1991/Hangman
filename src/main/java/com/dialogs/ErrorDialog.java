@@ -1,4 +1,4 @@
-package com.logicController;
+package com.dialogs;
 
 import javax.swing.*;
 
