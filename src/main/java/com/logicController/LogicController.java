@@ -1,11 +1,11 @@
 package com.logicController;
 
+import com.dialogCommands.ShowSaveGameDialogCommand;
 import com.dialogCommands.ShowWarningDialogCommand;
 import com.frameCommands.*;
 import com.dialogs.ErrorDialog;
-import com.dialogs.InfoDialog;
-import com.dialogs.SaveGameConfirmationDialog;
-import com.dialogs.WarningDialog;
+import com.gameController.HangmanGameState;
+import com.sleepycat.je.tree.IN;
 import com.strings.Urls;
 import com.strings.WarningMessages;
 
@@ -74,7 +74,7 @@ public class LogicController {
     public void gameFrameLetterButtonClick(String letter) {
         //todo implement functionality what happens when user presses a letter in game window
         String message = String.format("You pressed the %s letter!", letter); // it's a warning dialog, because I have no better one right now
-        windowController.showDialog( new ShowWarningDialogCommand(message));
+        windowController.showDialog(new ShowWarningDialogCommand(message));
     }
 
     public void aboutFrameLabelClick() {
@@ -90,13 +90,35 @@ public class LogicController {
     }
 
     public void gameFrameButtonClickExit() {
-        new SaveGameConfirmationDialog(); // todo implement save game logic
+        Integer result = closeGameFrameSequence();
+        if (result == JOptionPane.CANCEL_OPTION) { //  user has pressed cancel so do nothing
+            return;
+        }
         terminateApp();
     }
 
     public void gameFrameButtonClickMenu() {
-        //todo implement go to menu
+        Integer result = closeGameFrameSequence();
+        if (result == JOptionPane.CANCEL_OPTION) { //  user has pressed cancel so do nothing
+            return;
+        }
+        this.windowController.hideFrame(new HideGameFrameCommand());
+        this.windowController.showFrame(new ShowMenuFrameCommand());
     }
+
+    private Integer closeGameFrameSequence() {
+        Integer result = this.windowController.showDialog(new ShowSaveGameDialogCommand()); //todo check if should ask to save game
+        switch (result) {
+            case JOptionPane.YES_OPTION:
+                saveGameState();
+                break;
+            case JOptionPane.NO_OPTION:
+                clearGameState();
+                break;
+        }
+        return result;
+    }
+
 
     public void gameFrameButtonClickNewGame() {
         //todo implement
@@ -143,6 +165,14 @@ public class LogicController {
 
     public Settings getSettings() {
         return this.settingsManager.getSettings();
+    }
+
+    private void saveGameState() {
+        this.stateRepository.saveState(new HangmanGameState());
+    }
+
+    private void clearGameState() {
+        this.stateRepository.clearState();
     }
 }
 

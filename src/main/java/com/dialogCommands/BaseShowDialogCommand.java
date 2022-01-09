@@ -17,6 +17,6 @@ public abstract class BaseShowDialogCommand implements ShowDialogCommand {
     }
 
     public Integer getResult() {
-        return this.getResult();
+        return dialog.getResult();
     }
 }

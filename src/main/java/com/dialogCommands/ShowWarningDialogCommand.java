@@ -12,4 +12,9 @@ public class ShowWarningDialogCommand extends BaseShowDialogCommand {
     public void execute() {
         super.showDialog();
     }
+
+    @Override
+    public Integer getDialogResult() {
+        return null;
+    }
 }

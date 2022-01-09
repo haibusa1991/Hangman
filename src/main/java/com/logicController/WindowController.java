@@ -42,8 +42,9 @@ public class WindowController {
         }
     }
 
-    public void showDialog(ShowDialogCommand command){
+    public Integer showDialog(ShowDialogCommand command) {
         command.execute();
+        return command.getDialogResult();
     }
 
 }
