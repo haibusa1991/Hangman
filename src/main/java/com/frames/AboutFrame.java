@@ -50,6 +50,7 @@ public class AboutFrame extends JDialog implements HangmanFrame {
             public void mouseClicked(MouseEvent e) {
                 lc.aboutFrameLabelClick();
             }
+
         });
 
         //on cross click
@@ -63,6 +64,18 @@ public class AboutFrame extends JDialog implements HangmanFrame {
         this.aboutFrame.registerKeyboardAction(e -> lc.aboutFrameIsClosed(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_FOCUSED);
+
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                lc.aboutFrameLosesFocus();
+            }
+        });
     }
 
     private void initializeText() {

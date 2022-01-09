@@ -1,11 +1,13 @@
 package com.logicController;
 
-import com.commands.*;
+import com.dialogCommands.ShowWarningDialogCommand;
+import com.frameCommands.*;
 import com.dialogs.ErrorDialog;
 import com.dialogs.InfoDialog;
 import com.dialogs.SaveGameConfirmationDialog;
-import com.frames.SettingsFrame;
+import com.dialogs.WarningDialog;
 import com.strings.Urls;
+import com.strings.WarningMessages;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +19,7 @@ public class LogicController {
 
     private StateRepository stateRepository;
     private SettingsManager settingsManager;
-    private FrameController frameController;
+    private WindowController windowController;
     private GraphicsManager graphicsManager;
 
     private LogicController() throws
@@ -28,7 +30,7 @@ public class LogicController {
             IOException {
         stateRepository = new StateRepository();
         settingsManager = new SettingsManager();
-        frameController = new FrameController();
+        windowController = new WindowController();
         graphicsManager = new GraphicsManager();
     }
 
@@ -62,16 +64,17 @@ public class LogicController {
     }
 
     private void showMenu() {
-        this.frameController.showFrame(new ShowMenuFrameCommand());
+        this.windowController.showFrame(new ShowMenuFrameCommand());
     }
 
     public static void terminateApp() {
         System.exit(0);
     }
 
-    public void letterButtonPress(String letter) {
+    public void gameFrameLetterButtonClick(String letter) {
         //todo implement functionality what happens when user presses a letter in game window
-        new InfoDialog(String.format("You pressed the %s letter!", letter));
+        String message = String.format("You pressed the %s letter!", letter); // it's a warning dialog, because I have no better one right now
+        windowController.showDialog( new ShowWarningDialogCommand(message));
     }
 
     public void aboutFrameLabelClick() {
@@ -79,7 +82,11 @@ public class LogicController {
     }
 
     public void aboutFrameIsClosed() {
-        this.frameController.hideFrame(new HideAboutFrameCommand());
+        this.windowController.hideFrame(new HideAboutFrameCommand());
+    }
+
+    public void aboutFrameLosesFocus() {
+        aboutFrameIsClosed();
     }
 
     public void gameFrameButtonClickExit() {
@@ -95,13 +102,9 @@ public class LogicController {
         //todo implement
     }
 
-    public void menuFrameGainsFocus() {
-        aboutFrameIsClosed();
-    }
-
     public void menuFrameButtonClickNewGame() {
-        //todo implement
-        new InfoDialog("you clicked New game.");
+        this.windowController.hideFrame(new HideMenuFrameCommand());
+        this.windowController.showFrame(new ShowGameFrameCommand());
     }
 
     public void menuFrameButtonClickContinueGame() {
@@ -109,11 +112,11 @@ public class LogicController {
     }
 
     public void menuFrameButtonClickSettings() {
-        this.frameController.showFrame(new ShowSettingFrameCommand());
+        this.windowController.showFrame(new ShowSettingFrameCommand());
     }
 
     public void menuFrameButtonClickAbout() {
-        this.frameController.showFrame(new ShowAboutFrameCommand());
+        this.windowController.showFrame(new ShowAboutFrameCommand());
     }
 
     public void menuFrameButtonClickExit() {
@@ -125,14 +128,17 @@ public class LogicController {
     }
 
     public void settingsFrameButtonClickSave(Settings settings) {
-        System.out.println("settingsFrameButtonClickSave");
         this.settingsManager.setSettings(settings);
+        try {
+            this.settingsManager.saveSettingsToDisk(settings);
+        } catch (IOException e) {
+            this.windowController.showDialog(new ShowWarningDialogCommand(WarningMessages.SETTINGS_FRAME_UNABLE_TO_SAVE_SETTINGS_TO_DISK));
+        }
         settingsFrameIsClosed();
     }
 
     public void settingsFrameIsClosed() {
-        this.frameController.hideFrame(new HideSettingsFrameCommand());
-        System.out.println("settingsFrameIsClosed");
+        this.windowController.hideFrame(new HideSettingsFrameCommand());
     }
 
     public Settings getSettings() {

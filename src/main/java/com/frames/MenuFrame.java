@@ -71,18 +71,6 @@ public class MenuFrame extends JFrame implements HangmanFrame {
             }
         });
 
-        this.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-                lc.menuFrameGainsFocus();
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-
-            }
-        });
-
     }
 
     private void initializeText() {

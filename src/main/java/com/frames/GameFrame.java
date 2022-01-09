@@ -3,7 +3,6 @@ package com.frames;
 import com.enums.FrameType;
 import com.interfaces.HangmanFrame;
 import com.logicController.LogicController;
-import com.strings.GameFrameStrings;
 import com.utils.Utils;
 
 import javax.swing.*;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.strings.GameFrameStrings.*;
-import static com.strings.ErrorMessages.*;
 
 public class GameFrame extends JFrame implements HangmanFrame {
     private JPanel defaultPanel;
@@ -64,7 +62,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
 
     Dimension WINDOW_SIZE = new Dimension(850, 600);
 
-    private GameFrame() {
+    public GameFrame() {
         initializeFrame();
         attachListeners();
         initializeLetterButtons();
@@ -73,7 +71,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
     }
 
     private void initializeFrame() {
-        this.setTitle(GAMEFRAME_TITLE);
+        this.setTitle(GAME_FRAME_TITLE); //todo move to text init
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setContentPane(defaultPanel);
@@ -84,96 +82,141 @@ public class GameFrame extends JFrame implements HangmanFrame {
     }
 
     private void attachListeners() {
-        // call onCancel() when cross is clicked
+        LogicController lc = LogicController.getInstance();
+
+        // when cross is clicked
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                closeWindow();
+                lc.gameFrameButtonClickExit();
             }
         });
 
-        // call onCancel() on ESCAPE
-        this.defaultPanel.registerKeyboardAction(e -> closeWindow(),
+        // on escape key press
+        this.defaultPanel.registerKeyboardAction(e -> lc.gameFrameButtonClickExit(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+                JComponent.WHEN_FOCUSED);
 
     }
 
     private void initializeText() {
-        this.labelUsedLetters.setText(GAMEFRAME_LETTERS_USED);
-        this.wordLetters.setText(GAMEFRAME_WORD);
-        this.wordDescription.setText(GAMEFRAME_WORD_DESCRIPTION);
+        this.labelUsedLetters.setText(GAME_FRAME_LETTERS_USED);
+        this.wordLetters.setText(GAME_FRAME_WORD);
+        this.wordDescription.setText(GAME_FRAME_WORD_DESCRIPTION);
 
-        this.exitButton.setText(GAMEFRAME_EXIT);
-        this.menuButton.setText(GAMEFRAME_MAIN_MENU);
-        this.newGameButton.setText(GAMEFRAME_NEW_GAME);
+        this.exitButton.setText(GAME_FRAME_EXIT);
+        this.menuButton.setText(GAME_FRAME_MAIN_MENU);
+        this.newGameButton.setText(GAME_FRAME_NEW_GAME);
     }
 
     private void initializeLetterButtons() {
         letters = new ArrayList<>();
 
+        aButton.setText(GAME_FRAME_LETTER_A);
         letters.add(aButton);
+
+        bButton.setText(GAME_FRAME_LETTER_B);
         letters.add(bButton);
+
+        vButton.setText(GAME_FRAME_LETTER_V);
         letters.add(vButton);
+
+        gButton.setText(GAME_FRAME_LETTER_G);
         letters.add(gButton);
+
+        dButton.setText(GAME_FRAME_LETTER_D);
         letters.add(dButton);
+
+        eButton.setText(GAME_FRAME_LETTER_E);
         letters.add(eButton);
+
+        zhButton.setText(GAME_FRAME_LETTER_ZH);
         letters.add(zhButton);
+
+        zButton.setText(GAME_FRAME_LETTER_Z);
         letters.add(zButton);
+
+        iButton.setText(GAME_FRAME_LETTER_I);
         letters.add(iButton);
+
+        ikButton.setText(GAME_FRAME_LETTER_IK);
         letters.add(ikButton);
+
+        kButton.setText(GAME_FRAME_LETTER_K);
         letters.add(kButton);
+
+        lButton.setText(GAME_FRAME_LETTER_L);
         letters.add(lButton);
+
+        mButton.setText(GAME_FRAME_LETTER_M);
         letters.add(mButton);
+
+        nButton.setText(GAME_FRAME_LETTER_N);
         letters.add(nButton);
+
+        oButton.setText(GAME_FRAME_LETTER_O);
         letters.add(oButton);
+
+        pButton.setText(GAME_FRAME_LETTER_P);
         letters.add(pButton);
+
+        rButton.setText(GAME_FRAME_LETTER_R);
         letters.add(rButton);
+
+        sButton.setText(GAME_FRAME_LETTER_S);
         letters.add(sButton);
+
+        tButton.setText(GAME_FRAME_LETTER_T);
         letters.add(tButton);
+
+        uButton.setText(GAME_FRAME_LETTER_U);
         letters.add(uButton);
+
+        fButton.setText(GAME_FRAME_LETTER_F);
         letters.add(fButton);
+
+        hButton.setText(GAME_FRAME_LETTER_H);
         letters.add(hButton);
+
+        chButton.setText(GAME_FRAME_LETTER_CH);
         letters.add(chButton);
+
+        tzhButton.setText(GAME_FRAME_LETTER_TZH);
         letters.add(tzhButton);
+
+        shButton.setText(GAME_FRAME_LETTER_SH);
         letters.add(shButton);
+
+        shtButton.setText(GAME_FRAME_LETTER_SHT);
         letters.add(shtButton);
+
+        erGolyamButton.setText(GAME_FRAME_LETTER_ERGOLYAM);
         letters.add(erGolyamButton);
+
+        erMalakButton.setText(GAME_FRAME_LETTER_ERMALAK);
         letters.add(erMalakButton);
+
+        yuButton.setText(GAME_FRAME_LETTER_YU);
         letters.add(yuButton);
+
+        yaButton.setText(GAME_FRAME_LETTER_YA);
         letters.add(yaButton);
 
         for (JButton letterButton : letters) {
-            String letterString;
-            try {
-                letterString = GameFrameStrings.class.getDeclaredField(getCorrespondingString(letterButton)).toString(); //this is some bullshit :<
-            } catch (NoSuchFieldException e) {
-                letterString = GAMEFRAME_LETTER_NOT_FOUND_IN_STRINGS;
-            }
-
-            letterButton.setText(letterString);
             letterButton.addActionListener(e -> {
-                LogicController.getInstance().letterButtonPress(letterButton.getText());
+                LogicController.getInstance().gameFrameLetterButtonClick(letterButton.getText());
             });
         }
 
     }
 
-    private String getCorrespondingString(JButton button) {
-        return GAMEFRAME_LETTER_PREFIX + button.getName().replace(GAMEFRAME_LETTER_BUTTON_SUFFIX, GAMEFRAME_EMPTY_STRING).toUpperCase();
-    }
-
     private void initializeControlButtons() {
+        LogicController lc = LogicController.getInstance();
 
+        this.exitButton.addActionListener(e -> lc.gameFrameButtonClickExit());
 
-        this.exitButton.addActionListener(e -> closeWindow());
+        this.menuButton.addActionListener(e -> lc.gameFrameButtonClickMenu());
 
-        this.menuButton.addActionListener(e -> LogicController.getInstance().gameFrameButtonClickMenu());
-
-        this.newGameButton.addActionListener(e -> LogicController.getInstance().gameFrameButtonClickNewGame());
-    }
-
-    private void closeWindow() {
-        LogicController.getInstance().gameFrameButtonClickExit();
+        this.newGameButton.addActionListener(e -> lc.gameFrameButtonClickNewGame());
     }
 
     protected void setMockImage(BufferedImage image) {

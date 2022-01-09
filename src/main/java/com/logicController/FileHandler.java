@@ -14,7 +14,8 @@ import java.util.zip.InflaterInputStream;
 public class FileHandler {
 
     public void writeSettingsToDisk(Settings settings) throws IOException {
-        String filename = Utils.getArtifactPath() + Filenames.SETTINGS_FILENAME;
+//        String filename = Utils.getArtifactPath() + Filenames.SETTINGS_FILENAME;
+        String filename = Filenames.SETTINGS_FILENAME;
         FileOutputStream fos = new FileOutputStream(filename);
         ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
         oos.writeObject(settings);

@@ -1,17 +1,15 @@
 package com.logicController;
 
-import com.interfaces.HangmanFrame;
-import com.interfaces.HideCommand;
-import com.interfaces.ShowCommand;
+import com.interfaces.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameController {
+public class WindowController {
     private final List<HangmanFrame> visibleFrames;
 
-    public FrameController() throws
+    public WindowController() throws
             UnsupportedLookAndFeelException,
             ClassNotFoundException,
             InstantiationException,
@@ -21,7 +19,7 @@ public class FrameController {
         visibleFrames = new ArrayList<>();
     }
 
-    public void showFrame(ShowCommand command) {
+    public void showFrame(ShowFrameCommand command) {
         for (HangmanFrame frame : visibleFrames) {
             if (frame.getFrameType() == command.getFrameType()) {
                 frame.showFrame();
@@ -29,11 +27,12 @@ public class FrameController {
             }
         }
 
-        HangmanFrame frame = command.execute();
+        HangmanFrame frame = command.getFrame();
         visibleFrames.add(frame);
+        command.execute();
     }
 
-    public void hideFrame(HideCommand command) {
+    public void hideFrame(HideFrameCommand command) {
         for (HangmanFrame frame : visibleFrames) {
             if (frame.getFrameType() == command.getFrameType()) {
                 visibleFrames.remove(frame);
@@ -41,6 +40,10 @@ public class FrameController {
                 return;
             }
         }
+    }
+
+    public void showDialog(ShowDialogCommand command){
+        command.execute();
     }
 
 }

@@ -18,7 +18,7 @@ public class SettingsManager {
         }
     }
 
-    private void saveSettingsToDisk(Settings settings) throws IOException {
+    public void saveSettingsToDisk(Settings settings) throws IOException {
         new FileHandler().writeSettingsToDisk(settings);
     }
 

@@ -145,7 +145,6 @@ public class SettingsFrame extends JDialog implements HangmanFrame {
 
     @Override
     public void hideFrame() {
-        System.out.println("SettingsFrame.hideFrame()");
         this.dispose();
     }
 

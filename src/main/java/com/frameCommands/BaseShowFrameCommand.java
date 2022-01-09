@@ -1,13 +1,13 @@
-package com.commands;
+package com.frameCommands;
 
 import com.enums.FrameType;
 import com.interfaces.HangmanFrame;
-import com.interfaces.ShowCommand;
+import com.interfaces.ShowFrameCommand;
 
-public abstract class BaseShowCommand implements ShowCommand {
+public abstract class BaseShowFrameCommand implements ShowFrameCommand {
     private final HangmanFrame frame;
 
-    public BaseShowCommand(HangmanFrame frame) {
+    public BaseShowFrameCommand(HangmanFrame frame) {
         this.frame = frame;
     }
 
@@ -22,7 +22,8 @@ public abstract class BaseShowCommand implements ShowCommand {
         return frame.getFrameType();
     }
 
+    @Override
     public HangmanFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 }

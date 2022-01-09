@@ -2,9 +2,11 @@ package com.interfaces;
 
 import com.enums.FrameType;
 
-public interface ShowCommand {
+public interface ShowFrameCommand {
 
     HangmanFrame execute();
 
     FrameType getFrameType();
+
+    HangmanFrame getFrame();
 }

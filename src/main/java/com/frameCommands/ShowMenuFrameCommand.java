@@ -1,8 +1,8 @@
-package com.commands;
+package com.frameCommands;
 
 import com.frames.MenuFrame;
 
-public class ShowMenuFrameCommand extends BaseShowCommand{
+public class ShowMenuFrameCommand extends BaseShowFrameCommand {
 
     public ShowMenuFrameCommand() {
         super(new MenuFrame());

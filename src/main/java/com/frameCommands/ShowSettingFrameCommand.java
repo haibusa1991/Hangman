@@ -1,11 +1,11 @@
-package com.commands;
+package com.frameCommands;
 
 import com.frames.SettingsFrame;
 import com.interfaces.HangmanFrame;
 import com.logicController.LogicController;
 import com.logicController.Settings;
 
-public class ShowSettingFrameCommand extends BaseShowCommand {
+public class ShowSettingFrameCommand extends BaseShowFrameCommand {
 
     public ShowSettingFrameCommand() {
         super(new SettingsFrame());

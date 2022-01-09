@@ -3,7 +3,7 @@ package com.interfaces;
 
 import com.enums.FrameType;
 
-public interface HideCommand {
+public interface HideFrameCommand {
 
     void execute(HangmanFrame frame);
 

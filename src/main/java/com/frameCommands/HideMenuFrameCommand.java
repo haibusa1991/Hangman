@@ -1,8 +1,8 @@
-package com.commands;
+package com.frameCommands;
 
 import com.enums.FrameType;
 
-public class HideMenuFrameCommand extends BaseHideCommand{
+public class HideMenuFrameCommand extends BaseHideFrameCommand {
 
     @Override
     public FrameType getFrameType() {

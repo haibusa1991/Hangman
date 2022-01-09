@@ -25,10 +25,10 @@ public class Utils {
     public static String getResourcesPath() {
 //        jar:file:/D:/Repos/Hangman/bin/artifacts/Hangman_jar/Hangman.jar!/com.main/Hangman.class
 
-        int SYMBOLS_TO_TRIM_FROM_START=6;  //       "file:/"
-        int SYMBOLS_TO_TRIM_FROM_THE_END=18; //     "com.main/Hangman.class"
+        int SYMBOLS_TO_TRIM_FROM_START = 6;  //       "file:/"
+        int SYMBOLS_TO_TRIM_FROM_THE_END = 18; //     "com.main/Hangman.class"
         String fullPath = Hangman.class.getResource("Hangman.class").toString();
-        fullPath = fullPath.substring(SYMBOLS_TO_TRIM_FROM_START,fullPath.length()-SYMBOLS_TO_TRIM_FROM_THE_END);
+        fullPath = fullPath.substring(SYMBOLS_TO_TRIM_FROM_START, fullPath.length() - SYMBOLS_TO_TRIM_FROM_THE_END);
         return fullPath + "resources";
     }
 
@@ -40,18 +40,18 @@ public class Utils {
         return getResourcesPath() + "/gfx.dat";
     }
 
-    public static String getArtifactPath(){
+    public static String getArtifactPath() {
         String fullPath = Hangman.class.getResource("Hangman.class").toString();
-//        jar:file:/D:/Repos/Hangman/bin/artifacts/Hangman_jar/Hangman.jar!/com.main/Hangman.class
-        int SYMBOLS_TO_TRIM_FROM_START=10;  //       "jar:file:/"
-        String f = Hangman.class.getProtectionDomain().getCodeSource().toString();
-        return null;
+//        jar:file:/D:/Repos/Hangman/bin/Hangman.jar!/com/main/Hangman.class
+        int SYMBOLS_TO_TRIM_FROM_START = 10;  //       "jar:file:/"
+        int SYMBOLS_TO_TRIM_FROM_END = 24;    //       "!/com/main/Hangman.class"
+        return fullPath.substring(0,fullPath.length()-SYMBOLS_TO_TRIM_FROM_END).substring(SYMBOLS_TO_TRIM_FROM_START);
     }
 
     public static void addUnderline(JLabel label) {
         Font font = label.getFont();
         Map attributes = font.getAttributes();
-        attributes.put(TextAttribute.UNDERLINE,TextAttribute.UNDERLINE_ON);
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         label.setFont(font.deriveFont(attributes));
     }
 
