@@ -4,8 +4,9 @@ import com.dialogCommands.ShowSaveGameDialogCommand;
 import com.dialogCommands.ShowWarningDialogCommand;
 import com.frameCommands.*;
 import com.dialogs.ErrorDialog;
+import com.frames.GameFrame;
+import com.gameController.GameController;
 import com.gameController.HangmanGameState;
-import com.sleepycat.je.tree.IN;
 import com.strings.Urls;
 import com.strings.WarningMessages;
 
@@ -21,6 +22,7 @@ public class LogicController {
     private SettingsManager settingsManager;
     private WindowController windowController;
     private GraphicsManager graphicsManager;
+    private GameController gameController = null;
 
     private LogicController() throws
             UnsupportedLookAndFeelException,
@@ -32,6 +34,7 @@ public class LogicController {
         settingsManager = new SettingsManager();
         windowController = new WindowController();
         graphicsManager = new GraphicsManager();
+
     }
 
     public static LogicController getInstance() {
@@ -72,9 +75,7 @@ public class LogicController {
     }
 
     public void gameFrameLetterButtonClick(String letter) {
-        //todo implement functionality what happens when user presses a letter in game window
-        String message = String.format("You pressed the %s letter!", letter); // it's a warning dialog, because I have no better one right now
-        windowController.showDialog(new ShowWarningDialogCommand(message));
+        this.gameController.letterClick(letter);
     }
 
     public void aboutFrameLabelClick() {
@@ -103,11 +104,18 @@ public class LogicController {
             return;
         }
         this.windowController.hideFrame(new HideGameFrameCommand());
+        this.gameController = null;
         this.windowController.showFrame(new ShowMenuFrameCommand());
     }
 
     private Integer closeGameFrameSequence() {
-        Integer result = this.windowController.showDialog(new ShowSaveGameDialogCommand()); //todo check if should ask to save game
+        boolean doesShowSaveDialog = this.settingsManager.getSettings().doesSaveOnExit;
+        if (doesShowSaveDialog) {
+            saveGameState();
+            return 0;
+        }
+
+        Integer result = this.windowController.showDialog(new ShowSaveGameDialogCommand());
         switch (result) {
             case JOptionPane.YES_OPTION:
                 saveGameState();
@@ -119,7 +127,6 @@ public class LogicController {
         return result;
     }
 
-
     public void gameFrameButtonClickNewGame() {
         //todo implement
     }
@@ -127,6 +134,8 @@ public class LogicController {
     public void menuFrameButtonClickNewGame() {
         this.windowController.hideFrame(new HideMenuFrameCommand());
         this.windowController.showFrame(new ShowGameFrameCommand());
+        GameFrame gameFrame = this.windowController.getGameFrame();
+        gameController = new GameController(gameFrame, this.graphicsManager);
     }
 
     public void menuFrameButtonClickContinueGame() {

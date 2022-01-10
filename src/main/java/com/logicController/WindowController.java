@@ -1,6 +1,9 @@
 package com.logicController;
 
+import com.enums.FrameType;
+import com.frames.GameFrame;
 import com.interfaces.*;
+import com.strings.ErrorMessages;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -45,6 +48,15 @@ public class WindowController {
     public Integer showDialog(ShowDialogCommand command) {
         command.execute();
         return command.getDialogResult();
+    }
+
+    public GameFrame getGameFrame(){
+        for (HangmanFrame frame : visibleFrames) {
+            if(frame.getFrameType()== FrameType.GAME_FRAME){
+                return (GameFrame) frame;
+            }
+        }
+        throw new IllegalStateException(ErrorMessages.WINDOW_CONTROLLER_CANNOT_GET_GAME_FRAME);
     }
 
 }

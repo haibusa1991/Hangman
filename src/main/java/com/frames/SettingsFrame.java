@@ -70,7 +70,10 @@ public class SettingsFrame extends JDialog implements HangmanFrame {
         this.radioButtonHardDifficulty.setText(SETTINGS_FRAME_DIFFICULTY_HARD);
 
         this.checkBoxOnlineMode.setText(SETTINGS_FRAME_ONLINE_MODE);
+        this.checkBoxOnlineMode.setToolTipText(SETTINGS_FRAME_ONLINE_MODE_TOOLTIP);
+
         this.checkBoxSaveOnExit.setText(SETTINGS_FRAME_SAVE_ON_EXIT);
+        this.checkBoxSaveOnExit.setToolTipText(SETTINGS_FRAME_SAVE_ON_EXIT_TOOLTIP);
 
         this.labelDifficulty.setText(SETTINGS_FRAME_DIFFICULTY);
     }

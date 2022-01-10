@@ -6,6 +6,6 @@ public class ErrorMessages {
     public static final String GFX_FILE_INACCESSIBLE = "File gfx.dat is inaccessible.";
     public static final String GFX_FILE_INTERNAL_ERROR = "Internal error - GraphicsPackage object not found";
 
-    public static final String GAMEFRAME_LETTER_NOT_FOUND_IN_STRINGS = "error";
+    public static final String WINDOW_CONTROLLER_CANNOT_GET_GAME_FRAME = "Unable to get game frame!";
 
 }
