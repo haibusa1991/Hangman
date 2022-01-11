@@ -1,5 +1,7 @@
 package com.logicController;
 
+import com.enums.Difficulty;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

@@ -1,6 +1,8 @@
 package com.frames;
 
 import com.enums.FrameType;
+import com.gameController.GameState;
+import com.gameController.Letter;
 import com.interfaces.HangmanFrame;
 import com.logicController.LogicController;
 import com.utils.Utils;
@@ -15,7 +17,7 @@ import java.util.List;
 import static com.strings.GameFrameStrings.*;
 
 public class GameFrame extends JFrame implements HangmanFrame {
-    private JPanel defaultPanel;
+    private JPanel gameFrame;
 
     private List<JButton> letters;
 
@@ -58,6 +60,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
 
     private JLabel labelUsedLetters;
     private JLabel wordLetters;
+
     private JLabel wordDescription;
 
     Dimension WINDOW_SIZE = new Dimension(850, 600);
@@ -74,7 +77,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
         this.setTitle(GAME_FRAME_TITLE); //todo move to text init
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setContentPane(defaultPanel);
+        this.setContentPane(gameFrame);
         this.pack();
 //        this.setIconImage(Toolkit.getDefaultToolkit().getImage(Utils.getWindowIconPath())); //todo fix me
         this.setSize(WINDOW_SIZE);
@@ -92,7 +95,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
         });
 
         // on escape key press
-        this.defaultPanel.registerKeyboardAction(e -> lc.gameFrameButtonClickExit(),
+        this.gameFrame.registerKeyboardAction(e -> lc.gameFrameButtonClickExit(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_FOCUSED);
 
@@ -203,7 +206,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
 
         for (JButton letterButton : letters) {
             letterButton.addActionListener(e -> {
-                LogicController.getInstance().gameFrameLetterButtonClick(letterButton.getText());
+                LogicController.getInstance().gameFrameLetterButtonClick(new Letter(letterButton.getText()));
             });
         }
 
@@ -219,12 +222,6 @@ public class GameFrame extends JFrame implements HangmanFrame {
         this.newGameButton.addActionListener(e -> lc.gameFrameButtonClickNewGame());
     }
 
-    protected void setMockImage(BufferedImage image) {
-        image = Utils.resize(image, 300, 300);
-        this.hangedImage.setText("");
-        this.hangedImage.setIcon(new ImageIcon(image));
-    }
-
     @Override
     public void showFrame() {
         this.setVisible(true);
@@ -238,6 +235,32 @@ public class GameFrame extends JFrame implements HangmanFrame {
     @Override
     public FrameType getFrameType() {
         return FrameType.GAME_FRAME;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.wordLetters.setText(gameState.getWordState());
+        this.wordDescription.setText("<html><center>" + gameState.getDescription() + "</center></html>");
+
+        this.hangedImage.setText("");
+        BufferedImage currentStep = Utils.resize(gameState.getCurrentStep(), 300, 300);
+        this.hangedImage.setIcon(new ImageIcon(currentStep));
+
+        this.labelUsedLetters.setText(gameState.getUsedLetters());
+    }
+
+    public GameState getGameState() {
+        Icon icon = this.hangedImage.getIcon();
+
+        BufferedImage currentHangingStep = new BufferedImage(icon.getIconWidth(),
+                icon.getIconHeight(),
+                BufferedImage.TYPE_INT_ARGB);
+
+        Graphics graphics = currentHangingStep.createGraphics();
+        graphics.drawImage(currentHangingStep, 0, 0, null);
+        icon.paintIcon(null, graphics, 0, 0);
+        graphics.dispose();
+
+        return new GameState(this.wordLetters.getText(), this.wordDescription.getText(), currentHangingStep, this.labelUsedLetters.getText());
     }
 
 }

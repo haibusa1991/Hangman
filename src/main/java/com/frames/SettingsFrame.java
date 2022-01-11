@@ -78,11 +78,10 @@ public class SettingsFrame extends JDialog implements HangmanFrame {
         this.labelDifficulty.setText(SETTINGS_FRAME_DIFFICULTY);
     }
 
-
     private void attachListeners() {
         LogicController lc = LogicController.getInstance();
 
-        this.buttonSave.addActionListener(e -> lc.settingsFrameButtonClickSave(getState()));
+        this.buttonSave.addActionListener(e -> lc.settingsFrameButtonClickSave(getSettingsFrameState()));
 
         this.buttonCancel.addActionListener(e -> lc.settingsFrameIsClosed());
 
@@ -99,7 +98,8 @@ public class SettingsFrame extends JDialog implements HangmanFrame {
                 JComponent.WHEN_FOCUSED);
     }
 
-    public void setState(Settings settings) {
+
+    public void setSettingsFrameState(Settings settings) {
         this.checkBoxOnlineMode.setSelected(settings.isOnline);
         this.checkBoxSaveOnExit.setSelected(settings.doesSaveOnExit);
 
@@ -117,7 +117,7 @@ public class SettingsFrame extends JDialog implements HangmanFrame {
         }
     }
 
-    public Settings getState() {
+    public Settings getSettingsFrameState() {
         Settings settings = new Settings();
 
         settings.isOnline = this.checkBoxOnlineMode.isSelected();

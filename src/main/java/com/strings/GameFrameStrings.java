@@ -41,6 +41,6 @@ public class GameFrameStrings {
     public final static String GAME_FRAME_MAIN_MENU = "Menu";
     public final static String GAME_FRAME_WORD_DESCRIPTION = "Word description goes here";
     public final static String GAME_FRAME_WORD = "Word goes here";
-    public final static String GAME_FRAME_LETTERS_USED = "Letters used:";
+    public final static String GAME_FRAME_LETTERS_USED = "Използвани букви: ";
 
 }

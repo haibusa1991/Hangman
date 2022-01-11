@@ -15,7 +15,7 @@ public class ShowSettingFrameCommand extends BaseShowFrameCommand {
     public HangmanFrame execute() {
         SettingsFrame frame = (SettingsFrame) super.getFrame();
         Settings settings = LogicController.getInstance().getSettings();
-        frame.setState(settings);
+        frame.setSettingsFrameState(settings);
 
         frame.showFrame();
         return super.getFrame();

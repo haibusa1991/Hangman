@@ -1,5 +1,6 @@
 package com.logicController;
 
+import com.database.OnlineWordsFetcher;
 import com.dialogCommands.ShowSaveGameDialogCommand;
 import com.dialogCommands.ShowWarningDialogCommand;
 import com.frameCommands.*;
@@ -7,6 +8,8 @@ import com.dialogs.ErrorDialog;
 import com.frames.GameFrame;
 import com.gameController.GameController;
 import com.gameController.HangmanGameState;
+import com.gameController.Letter;
+import com.gameController.Word;
 import com.strings.Urls;
 import com.strings.WarningMessages;
 
@@ -34,6 +37,22 @@ public class LogicController {
         settingsManager = new SettingsManager();
         windowController = new WindowController();
         graphicsManager = new GraphicsManager();
+
+        initializeStateRepository();
+
+    }
+
+    private void initializeStateRepository() {
+        //todo implement properly
+        // online fetcher should fetch 3 list of words (easy, medium and hard) and populate the repo
+        // if online mode is off should query the local db and get the words from it
+        // word mask should be dynamically generated and words updated after several games (like 3 or so)
+        OnlineWordsFetcher owfE = new OnlineWordsFetcher("...а.");
+        OnlineWordsFetcher owfM = new OnlineWordsFetcher(".....х.");
+        OnlineWordsFetcher owfH = new OnlineWordsFetcher("..ф...");
+        this.stateRepository.setEasyWords(owfE.getWords());
+        this.stateRepository.setMediumWords(owfM.getWords());
+        this.stateRepository.setHardWords(owfH.getWords());
 
     }
 
@@ -74,7 +93,7 @@ public class LogicController {
         System.exit(0);
     }
 
-    public void gameFrameLetterButtonClick(String letter) {
+    public void gameFrameLetterButtonClick(Letter letter) {
         this.gameController.letterClick(letter);
     }
 
@@ -117,18 +136,14 @@ public class LogicController {
 
         Integer result = this.windowController.showDialog(new ShowSaveGameDialogCommand());
         switch (result) {
-            case JOptionPane.YES_OPTION:
-                saveGameState();
-                break;
-            case JOptionPane.NO_OPTION:
-                clearGameState();
-                break;
+            case JOptionPane.YES_OPTION -> saveGameState();
+            case JOptionPane.NO_OPTION -> clearGameState();
         }
         return result;
     }
 
     public void gameFrameButtonClickNewGame() {
-        //todo implement
+        gameController.startNewGame(this.settingsManager.getSettings().difficulty);
     }
 
     public void menuFrameButtonClickNewGame() {
@@ -136,6 +151,7 @@ public class LogicController {
         this.windowController.showFrame(new ShowGameFrameCommand());
         GameFrame gameFrame = this.windowController.getGameFrame();
         gameController = new GameController(gameFrame, this.graphicsManager);
+        gameFrameButtonClickNewGame();
     }
 
     public void menuFrameButtonClickContinueGame() {
@@ -182,6 +198,18 @@ public class LogicController {
 
     private void clearGameState() {
         this.stateRepository.clearState();
+    }
+
+    public Word getEasyWord() {
+        return this.stateRepository.getEasyWord();
+    }
+
+    public Word getMediumWord() {
+        return this.stateRepository.getMediumWord();
+    }
+
+    public Word getHardWord() {
+        return this.stateRepository.getHardWord();
     }
 }
 

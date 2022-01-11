@@ -10,14 +10,12 @@ import java.util.Map;
 
 public class DatabaseCreator {
     public static void main(String[] args) {
-        initializeEnvironment();
-        OnlineWordsFetcher owf = new OnlineWordsFetcher("..ф..");
-        String csv = owf.getWordsAsCsv();
-        owf.writeWordsAsCsvToDisk("csv1.csv");
-        Map<String, String> words = owf.getWordsAsMap();
-        System.out.println();
-
-
+//        initializeEnvironment();
+//        OnlineWordsFetcher owf = new OnlineWordsFetcher("..ф..");
+//        String csv = owf.getWordsAsCsv();
+//        owf.writeWordsAsCsvToDisk("csv1.csv");
+//        Map<String, String> words = owf.getWordsAsMap();
+//        System.out.println();
     }
 
     private static void initializeEnvironment() {
