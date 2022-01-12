@@ -74,7 +74,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
     }
 
     private void initializeFrame() {
-        this.setTitle(GAME_FRAME_TITLE); //todo move to text init
+
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setContentPane(gameFrame);
@@ -102,6 +102,8 @@ public class GameFrame extends JFrame implements HangmanFrame {
     }
 
     private void initializeText() {
+        this.setTitle(GAME_FRAME_TITLE);
+
         this.labelUsedLetters.setText(GAME_FRAME_LETTERS_USED);
         this.wordLetters.setText(GAME_FRAME_WORD);
         this.wordDescription.setText(GAME_FRAME_WORD_DESCRIPTION);
@@ -263,4 +265,15 @@ public class GameFrame extends JFrame implements HangmanFrame {
         return new GameState(this.wordLetters.getText(), this.wordDescription.getText(), currentHangingStep, this.labelUsedLetters.getText());
     }
 
+    public void disableLetters() {
+        for (JButton letter : letters) {
+            letter.setEnabled(false);
+        }
+    }
+
+    public void enableLetters() {
+        for (JButton letter : letters) {
+            letter.setEnabled(true);
+        }
+    }
 }

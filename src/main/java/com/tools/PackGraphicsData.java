@@ -1,5 +1,6 @@
 package com.tools;
 
+import com.strings.Filenames;
 import com.utils.Utils;
 import com.logicController.FileHandler;
 import com.logicController.GraphicsPackage;
@@ -18,8 +19,9 @@ import java.util.zip.DeflaterOutputStream;
 
 public class PackGraphicsData implements Serializable {
 
-    private final int NUMBER_OF_FRAMES = 14;
+    private final int NUMBER_OF_FRAMES = 15;
     private final String PNG_SOURCE_PATH = "D:\\Repos\\Hangman\\gfx sources\\";
+    private final String PNG_TARGET_PATH = "D:\\Repos\\Hangman\\resources\\resources\\gfx.dat";
 
     private GraphicsPackage loadSourceImagesFromDisk() {
         try {
@@ -38,7 +40,7 @@ public class PackGraphicsData implements Serializable {
 
     private void savePackedImagesToDisk(GraphicsPackage pack) {
         try {
-            FileOutputStream fos = new FileOutputStream(Utils.getGraphicsPath());
+            FileOutputStream fos = new FileOutputStream(PNG_TARGET_PATH);
             ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
             oos.writeObject(pack);
             oos.close();
@@ -69,7 +71,7 @@ public class PackGraphicsData implements Serializable {
 
 
         try {
-            GraphicsPackage graphics = fileHandler.readGraphicsFromDiskDebug();
+            GraphicsPackage graphics = fileHandler.readGraphicsFromDisk();
             List<BufferedImage> images = packGraphicsData.loadGfx(graphics);
 
             JFrame frame = new JFrame("Image");
@@ -85,6 +87,7 @@ public class PackGraphicsData implements Serializable {
                 frame.repaint();
                 Thread.sleep(250);
             }
+            Thread.sleep(2500);
             System.exit(0);
         } catch (Exception ex) {
             ex.printStackTrace();

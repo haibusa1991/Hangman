@@ -38,5 +38,7 @@ public class GraphicsManager {
         return images.get(index);
     }
 
-
+    public BufferedImage getWonGameImage() {
+        return this.images.get(this.images.size()-1);
+    }
 }
