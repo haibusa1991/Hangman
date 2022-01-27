@@ -53,7 +53,6 @@ public class LogicController {
         this.stateRepository.setEasyWords(owfE.getWords());
         this.stateRepository.setMediumWords(owfM.getWords());
         this.stateRepository.setHardWords(owfH.getWords());
-
     }
 
     public static LogicController getInstance() {

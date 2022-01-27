@@ -13,8 +13,7 @@ import static com.strings.Filenames.*;
 public class FileHandler {
 
     public void writeSettingsToDisk(Settings settings) throws IOException {
-        String filename = SETTINGS_FILENAME;
-        FileOutputStream fos = new FileOutputStream(filename);
+        FileOutputStream fos = new FileOutputStream(SETTINGS_FILENAME);
         ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
         oos.writeObject(settings);
         oos.close();
@@ -77,7 +76,13 @@ public class FileHandler {
             icon = new ImageIcon(stream.readAllBytes());
         } catch (IOException e) {
             throw new IOException(ErrorMessages.UTILS_CANNOT_LOAD_ICON_IMAGE);
+        } finally {
+            stream.close();
         }
         return icon;
+    }
+
+    public String getResourcesPath(){
+        return this.getClass().getResourceAsStream(Filenames.RESOURCES_PATH).toString();
     }
 }

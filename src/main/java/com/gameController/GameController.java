@@ -34,7 +34,7 @@ public class GameController {
     }
 
     public void letterClick(Letter letter) {
-        this.gameState=this.gameFrame.getGameState();
+        this.gameState = this.gameFrame.getGameState();
 
         extractUsedLetters();
 
@@ -48,9 +48,9 @@ public class GameController {
 
         checkIfGameHasEnded();
 
-        if(isDead){
+        if (isDead) {
             this.gameState.setWordState(revealWord(this.targetWord));
-        } else if(hasWon){
+        } else if (hasWon) {
             this.gameState.setCurrentStep(this.graphicsManager.getWonGameImage());
         }
 
@@ -64,7 +64,7 @@ public class GameController {
     }
 
     private void updateUsedLettersRepresentation() {
-        String letters =  usedLetters.stream().map(e->e + "").collect(Collectors.joining(GAME_FRAME_LETTER_DELIMITER));
+        String letters = usedLetters.stream().map(Object::toString).collect(Collectors.joining(GAME_FRAME_LETTER_DELIMITER));
         this.gameState.setUsedLetters(GAME_FRAME_LETTERS_USED + letters);
     }
 
@@ -74,7 +74,7 @@ public class GameController {
         } else if (!hangingSteps.hasNext()) {
             isDead = true;
         }
-}
+    }
 
     private void punishPlayer() {
         this.gameState.setCurrentStep(hangingSteps.next());
@@ -83,7 +83,7 @@ public class GameController {
     private boolean isGoodGuess(Letter letter) {
         Character c = letter.getLetter().toUpperCase().charAt(0);
 
-        return this.targetWord.contains(c + "")
+        return this.targetWord.contains(c.toString())
                 && !this.usedLetters.contains(c);
     }
 
@@ -123,7 +123,7 @@ public class GameController {
     }
 
     private String maskWord(String word) {
-        return "_ ".repeat(word.length()).trim();
+        return (GAME_FRAME_HIDDEN_LETTER + " ").repeat(word.length()).trim();
     }
 
     private int[] getLetterIndices(Letter letter) {
@@ -166,7 +166,7 @@ public class GameController {
         this.gameState.setWordState(replaceUnderscores(this.gameState.getWordState(), letter, positions));
     }
 
-    private void addGuessToUsedLetters(Letter letter){
+    private void addGuessToUsedLetters(Letter letter) {
         this.usedLetters.add(letter.getLetter().toUpperCase().charAt(0));
     }
 }

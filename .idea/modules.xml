@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DatabaseCreator/DatabaseCreator.iml" filepath="$PROJECT_DIR$/DatabaseCreator/DatabaseCreator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GfxGenerator/GfxGenerator.iml" filepath="$PROJECT_DIR$/GfxGenerator/GfxGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Hangman.iml" filepath="$PROJECT_DIR$/Hangman.iml" />
     </modules>
   </component>

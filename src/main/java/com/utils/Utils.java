@@ -1,18 +1,11 @@
 package com.utils;
 
-
-import com.main.Hangman;
-import com.strings.ErrorMessages;
 import com.strings.Filenames;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Map;
 
 public class Utils {
@@ -27,32 +20,6 @@ public class Utils {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         dialog.setLocation((int) (screenSize.width / 2 - d.getWidth() / 2), (int) (screenSize.height / 2 - d.getHeight() / 2));
     }
-
-//    public static String getResourcesPath() {
-////        jar:file:/D:/Repos/Hangman/bin/artifacts/Hangman_jar/Hangman.jar!/com.main/Hangman.class
-//
-//        int SYMBOLS_TO_TRIM_FROM_START = 6;  //       "file:/"
-//        int SYMBOLS_TO_TRIM_FROM_THE_END = 18; //     "com.main/Hangman.class"
-//        String fullPath = Hangman.class.getResource("Hangman.class").toString();
-//        fullPath = fullPath.substring(SYMBOLS_TO_TRIM_FROM_START, fullPath.length() - SYMBOLS_TO_TRIM_FROM_THE_END);
-//        return fullPath + "resources";
-//    }
-
-//    public static String getWindowIconPath() {
-//        return getResourcesPath() + "/icon.png";
-//    }
-//
-//    public static String getGraphicsPath() {
-//        return getResourcesPath() + "/gfx.dat";
-//    }
-
-//    public static String getArtifactPath() {
-//        String fullPath = Hangman.class.getResource("Hangman.class").toString();
-////        jar:file:/D:/Repos/Hangman/bin/Hangman.jar!/com/main/Hangman.class
-//        int SYMBOLS_TO_TRIM_FROM_START = 10;  //       "jar:file:/"
-//        int SYMBOLS_TO_TRIM_FROM_END = 24;    //       "!/com/main/Hangman.class"
-//        return fullPath.substring(0, fullPath.length() - SYMBOLS_TO_TRIM_FROM_END).substring(SYMBOLS_TO_TRIM_FROM_START);
-//    }
 
     public static void addUnderline(JLabel label) {
         Font font = label.getFont();
@@ -77,4 +44,5 @@ public class Utils {
 
         return dimg;
     }
+
 }

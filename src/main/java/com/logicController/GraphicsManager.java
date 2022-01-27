@@ -1,7 +1,5 @@
 package com.logicController;
 
-import com.enums.Difficulty;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

@@ -2,8 +2,6 @@ package com.strings;
 
 
 public class GameFrameStrings {
-    public final static String GAME_FRAME_EMPTY_STRING = "";
-
     public final static String GAME_FRAME_LETTER_A = "А";
     public final static String GAME_FRAME_LETTER_B = "Б";
     public final static String GAME_FRAME_LETTER_V = "В";
