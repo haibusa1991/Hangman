@@ -3,6 +3,8 @@ package com.logicController;
 import com.enums.Difficulty;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -14,9 +16,12 @@ import java.util.Map;
 public class GraphicsManager {
     private List<BufferedImage> images;
     private GraphicsPackage graphicsPackage;
+    private final ImageIcon windowIcon;
 
     public GraphicsManager() throws IOException, ClassNotFoundException {
-        graphicsPackage = new FileHandler().readGraphicsFromDisk();
+        FileHandler fh = new FileHandler();
+        graphicsPackage = fh.readGraphicsFromDisk();
+        windowIcon = fh.readWindowIconFromDisk();
         images = new ArrayList<>();
         initializeImages();
     }
@@ -40,5 +45,9 @@ public class GraphicsManager {
 
     public BufferedImage getWonGameImage() {
         return this.images.get(this.images.size()-1);
+    }
+
+    public Image getWindowIcon() {
+        return windowIcon.getImage();
     }
 }

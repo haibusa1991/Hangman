@@ -36,7 +36,6 @@ public class MenuFrame extends JFrame implements HangmanFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(menuFrame);
-//        this.setIconImage(new FileHandler().getApplicationIcon());//todo fix path and implementation
         this.pack();
         this.setSize(WINDOW_SIZE);
         Utils.centerFrame(this);

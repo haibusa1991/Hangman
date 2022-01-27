@@ -1,21 +1,19 @@
 package com.logicController;
 
-import com.dialogs.ErrorDialog;
 import com.strings.ErrorMessages;
 import com.strings.Filenames;
-import com.utils.Utils;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import javax.swing.*;
 import java.io.*;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import static com.strings.Filenames.*;
+
 public class FileHandler {
 
     public void writeSettingsToDisk(Settings settings) throws IOException {
-//        String filename = Utils.getArtifactPath() + Filenames.SETTINGS_FILENAME;
-        String filename = Filenames.SETTINGS_FILENAME;
+        String filename = SETTINGS_FILENAME;
         FileOutputStream fos = new FileOutputStream(filename);
         ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
         oos.writeObject(settings);
@@ -24,7 +22,7 @@ public class FileHandler {
     }
 
     public Settings readSettingsFromDisk() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Filenames.SETTINGS_FILENAME);
+        FileInputStream fis = new FileInputStream(SETTINGS_FILENAME);
         ObjectInputStream ois = new ObjectInputStream(new InflaterInputStream(fis));
         Object objectFromDisk = ois.readObject();
 
@@ -71,46 +69,15 @@ public class FileHandler {
         return graphicsPackage;
     }
 
-    public GraphicsPackage readGraphicsFromDiskDebug() throws IOException, ClassNotFoundException {
-        String HARDCODED_PATH = "D:\\Repos\\Hangman\\target\\classes\\com\\resources\\gfx.dat";
-
-//        InputStream graphics = this.getClass().getResourceAsStream(HARDCODED_PATH);
-        FileInputStream graphics = new FileInputStream(HARDCODED_PATH);
-        if (graphics == null) {
-            throw new IllegalStateException(ErrorMessages.GFX_FILE_NOT_FOUND);
-        }
-
-        ObjectInputStream ois;
+    public ImageIcon readWindowIconFromDisk() throws IOException {
+        InputStream stream;
+        stream = this.getClass().getResourceAsStream(GRAPHICS_WINDOW_ICON);
+        ImageIcon icon;
         try {
-            ois = new ObjectInputStream(new InflaterInputStream(graphics));
-        } catch (StreamCorruptedException e1) {
-            throw new StreamCorruptedException(ErrorMessages.GFX_FILE_CORRUPTED);
-        } catch (IOException e2) {
-            throw new IOException(ErrorMessages.GFX_FILE_INACCESSIBLE);
-        }
-
-        GraphicsPackage graphicsPackage;
-        try {
-            graphicsPackage = (GraphicsPackage) ois.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundException(ErrorMessages.GFX_FILE_INTERNAL_ERROR);
-        }
-
-        ois.close();
-        graphics.close();
-        return graphicsPackage;
-    }
-
-    public BufferedImage reaApplicationIconFromDisk() {
-        try {
-            InputStream image = this.getClass().getResourceAsStream("/resources/icon.png");
-            return ImageIO.read(image);
+            icon = new ImageIcon(stream.readAllBytes());
         } catch (IOException e) {
-            //todo refactor and introduce error handler - some class that is responsible for handling all exceptions like throwing errors, prompts, messages, geneating new settings file and so on;
-            new ErrorDialog("Unable to read icon.png. File is missing or corrupted");
-            LogicController.getInstance().terminateApp();
+            throw new IOException(ErrorMessages.UTILS_CANNOT_LOAD_ICON_IMAGE);
         }
-        return null;
+        return icon;
     }
-
 }

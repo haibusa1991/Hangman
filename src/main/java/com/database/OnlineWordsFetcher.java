@@ -15,10 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OnlineWordsFetcher {
-//    private final String CSV_DELIMITER = "|";
 
     private final HttpClient httpClient;
-    //    private Map<String, String> pairs; //word, description
     private List<Word> words;
 
     public OnlineWordsFetcher(String wordMask) {
@@ -29,24 +27,6 @@ public class OnlineWordsFetcher {
         fetchPairs(wordMask);
     }
 
-//    public String getWordsAsCsv() {
-//        return getWordsAsCsv(pairs);
-//    }
-//
-//    public boolean writeWordsAsCsvToDisk(String filename) {
-//        String csv = getWordsAsCsv();
-//        try {
-//            writePairsAsCsv(csv, filename);
-//            return true;
-//        } catch (IOException e) {
-//            return false;
-//        }
-//
-//    }
-
-//    public Map<String, String> getWordsAsMap() {
-//        return this.pairs;
-//    }
 
     private void fetchPairs(String wordMask) {
         HttpRequest request = buildHttpRequest(wordMask);
@@ -84,7 +64,6 @@ public class OnlineWordsFetcher {
     }
 
     private List<Word> getSanitizedPairs(List<String> rawPairs) {
-//        Map<String, String> pairs = new LinkedHashMap<>();
         List<Word> words = new ArrayList<>();
         for (String rawPair : rawPairs) {
 
@@ -103,45 +82,6 @@ public class OnlineWordsFetcher {
         }
         return words;
     }
-
-//    private String getWordsAsCsv(Map<String, String> pairs) {
-//        StringBuilder words = new StringBuilder();
-//        for (Map.Entry<String, String> pair : pairs.entrySet()) {
-//            String word = pair.getKey();
-//            String description = pair.getValue();
-//            words.append(word)
-//                    .append(CSV_DELIMITER)
-//                    .append(description)
-//                    .append(System.lineSeparator());
-//        }
-//        return words.toString();
-//    }
-
-//    private void writePairsAsCsv(String csv, String filename) throws IOException {
-//        File csvFile = new File(dbUtils.getCsvPath() + "\\" + filename);
-//        FileOutputStream fos = new FileOutputStream(csvFile);
-//        fos.write(csv.getBytes(StandardCharsets.UTF_8));
-//        fos.close();
-//    }
-
-//    public Word getRandomWord() { //todo remove this method, it's a quick and dirty
-//        Random random = new Random();
-//        int index = random.nextInt(this.pairs.size()) + 1;
-//
-//        String word = "<EMPTY>";
-//        String description = "<EMPTY>";
-//
-//        Iterator<Map.Entry<String, String>> iterator = pairs.entrySet().iterator();
-//
-//        while (index-- > 0) {
-//            Map.Entry<String, String> entry = iterator.next();
-//            word = entry.getKey();
-//            description = entry.getValue();
-//        }
-//
-//        return new Word(word, description);
-//    }
-
 
     public List<Word> getWords() {
         return Collections.unmodifiableList(this.words);

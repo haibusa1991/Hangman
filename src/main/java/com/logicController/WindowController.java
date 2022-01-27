@@ -4,8 +4,11 @@ import com.enums.FrameType;
 import com.frames.GameFrame;
 import com.interfaces.*;
 import com.strings.ErrorMessages;
+import com.strings.Filenames;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class WindowController {
         HangmanFrame frame = command.getFrame();
         visibleFrames.add(frame);
         command.execute();
+
     }
 
     public void hideFrame(HideFrameCommand command) {
@@ -50,9 +54,9 @@ public class WindowController {
         return command.getDialogResult();
     }
 
-    public GameFrame getGameFrame(){
+    public GameFrame getGameFrame() {
         for (HangmanFrame frame : visibleFrames) {
-            if(frame.getFrameType()== FrameType.GAME_FRAME){
+            if (frame.getFrameType() == FrameType.GAME_FRAME) {
                 return (GameFrame) frame;
             }
         }

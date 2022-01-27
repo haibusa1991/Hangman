@@ -1,6 +1,5 @@
 package com.main;
 
-import com.dialogs.ErrorDialog;
 import com.logicController.LogicController;
 
 public class Hangman {
@@ -10,8 +9,7 @@ public class Hangman {
         try {
             LogicController.getInstance();
         } catch (Exception e){
-            new ErrorDialog(e.getMessage());
-            LogicController.terminateApp();
+            LogicController.throwError(e.getMessage());
         }
 
 

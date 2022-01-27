@@ -9,23 +9,24 @@ import com.strings.GameFrameStrings;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.strings.GameFrameStrings.*;
 
-/**
- * responsible for displaying the correct image on screen, revealing the correct letters from the word,
- * chooses which letters to disable, keeps track of which letters are disabled.
- * Some more things probably, but it's 0:45 so...
- */
 public class GameController {
-    GraphicsManager graphicsManager;
-    GameFrame gameFrame;
-    GameState gameState;
 
-    String targetWord = null;
-    Iterator<BufferedImage> hangingSteps = null;
-    boolean isDead = false;
-    boolean hasWon = false;
+    private final GraphicsManager graphicsManager;
+    private final GameFrame gameFrame;
+    private GameState gameState;
+
+    private String targetWord = null;
+    private Iterator<BufferedImage> hangingSteps = null;
+    private boolean isDead = false;
+    private boolean hasWon = false;
+
+    private Set<Character> usedLetters;
 
     public GameController(GameFrame gameFrame, GraphicsManager graphicsManager) {
         this.gameFrame = gameFrame;
@@ -33,54 +34,57 @@ public class GameController {
     }
 
     public void letterClick(Letter letter) {
-        if (isDead || hasWon) {
-            return;
-        }
-        //todo
-        // refactor the if-else galore.
+        this.gameState=this.gameFrame.getGameState();
 
-        GameState state = this.gameFrame.getGameState();
-        String trimmedUsedLetters = state.getUsedLetters().substring(GAME_FRAME_LETTERS_USED.length());
-        state.setUsedLetters(trimmedUsedLetters);
+        extractUsedLetters();
 
-        StringBuilder usedLetters = new StringBuilder(trimmedUsedLetters);
-
-        if (usedLetters.isEmpty()) {
-            usedLetters.append(letter.getLetter());
-        } else if (!usedLetters.toString().contains(letter.getLetter())) {
-            usedLetters.append(", ").append(letter.getLetter());
-        }
-        usedLetters.insert(0, GAME_FRAME_LETTERS_USED);
-
-        if (this.targetWord.contains(letter.getLetter()) && !state.getUsedLetters().contains(letter.getLetter())) {
-            int[] positions = getLetterIndices(letter);
-            String updatedWord = replaceUnderscores(state.getWordState(), letter, positions);
-            state.setWordState(updatedWord);
-            state.setUsedLetters(usedLetters.toString());
-
-            if (!state.getWordState().contains("_")) {
-                state.setCurrentStep(this.graphicsManager.getWonGameImage());
-                this.hasWon = true;
-                gameFrame.disableLetters();
-                gameFrame.setGameState(state);
-                return;
-            }
-
+        if (isGoodGuess(letter)) {
+            revealLetter(letter);
         } else {
-            if (hangingSteps.hasNext()) {
-                state.setUsedLetters(usedLetters.toString());
-                state.setCurrentStep(hangingSteps.next());
-                if (!hangingSteps.hasNext()) {
-                    isDead = true;
-                    gameFrame.disableLetters();
-                    state.setWordState(revealWord(this.targetWord));
-                }
-            } else {
-                isDead = true;
-            }
+            punishPlayer();
         }
 
-        gameFrame.setGameState(state);
+        addGuessToUsedLetters(letter);
+
+        checkIfGameHasEnded();
+
+        if(isDead){
+            this.gameState.setWordState(revealWord(this.targetWord));
+        } else if(hasWon){
+            this.gameState.setCurrentStep(this.graphicsManager.getWonGameImage());
+        }
+
+        if (isDead || hasWon) {
+            gameFrame.disableLetters();
+        }
+
+        updateUsedLettersRepresentation();
+
+        this.gameFrame.setGameState(this.gameState);
+    }
+
+    private void updateUsedLettersRepresentation() {
+        String letters =  usedLetters.stream().map(e->e + "").collect(Collectors.joining(GAME_FRAME_LETTER_DELIMITER));
+        this.gameState.setUsedLetters(GAME_FRAME_LETTERS_USED + letters);
+    }
+
+    private void checkIfGameHasEnded() {
+        if (!this.gameState.getWordState().contains(GAME_FRAME_HIDDEN_LETTER)) {
+            this.hasWon = true;
+        } else if (!hangingSteps.hasNext()) {
+            isDead = true;
+        }
+}
+
+    private void punishPlayer() {
+        this.gameState.setCurrentStep(hangingSteps.next());
+    }
+
+    private boolean isGoodGuess(Letter letter) {
+        Character c = letter.getLetter().toUpperCase().charAt(0);
+
+        return this.targetWord.contains(c + "")
+                && !this.usedLetters.contains(c);
     }
 
     private String revealWord(String word) {
@@ -90,7 +94,6 @@ public class GameController {
         }
         return sb.toString().trim();
     }
-
 
     public void startNewGame(Difficulty difficulty) {
         switch (difficulty) {
@@ -105,6 +108,7 @@ public class GameController {
         this.hangingSteps = hangmanGame.iterator();
         this.isDead = false;
         this.hasWon = false;
+        this.usedLetters = new LinkedHashSet<>();
 
         this.gameState = new GameState(
                 maskWord(hangmanGame.getWord()),
@@ -142,5 +146,27 @@ public class GameController {
             word[i] = letter.getLetter().toCharArray()[0];
         }
         return new String(word);
+    }
+
+    private void extractUsedLetters() {
+        String letters = this.gameFrame
+                .getGameState()
+                .getUsedLetters()
+                .substring(GAME_FRAME_LETTERS_USED.length())
+                .toUpperCase()
+                .replace(GAME_FRAME_LETTER_DELIMITER, "");
+
+        for (Character letter : letters.toCharArray()) {
+            this.usedLetters.add(letter);
+        }
+    }
+
+    private void revealLetter(Letter letter) {
+        int[] positions = getLetterIndices(letter);
+        this.gameState.setWordState(replaceUnderscores(this.gameState.getWordState(), letter, positions));
+    }
+
+    private void addGuessToUsedLetters(Letter letter){
+        this.usedLetters.add(letter.getLetter().toUpperCase().charAt(0));
     }
 }

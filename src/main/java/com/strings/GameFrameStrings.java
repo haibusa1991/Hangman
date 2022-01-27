@@ -43,4 +43,7 @@ public class GameFrameStrings {
     public final static String GAME_FRAME_WORD = "Word goes here";
     public final static String GAME_FRAME_LETTERS_USED = "Използвани букви: ";
 
+    public final static String GAME_FRAME_LETTER_DELIMITER = ", ";
+    public final static String GAME_FRAME_HIDDEN_LETTER = "_";
+
 }

@@ -79,7 +79,6 @@ public class GameFrame extends JFrame implements HangmanFrame {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setContentPane(gameFrame);
         this.pack();
-//        this.setIconImage(Toolkit.getDefaultToolkit().getImage(Utils.getWindowIconPath())); //todo fix me
         this.setSize(WINDOW_SIZE);
         Utils.centerFrame(this);
     }
@@ -244,7 +243,7 @@ public class GameFrame extends JFrame implements HangmanFrame {
         this.wordDescription.setText("<html><center>" + gameState.getDescription() + "</center></html>");
 
         this.hangedImage.setText("");
-        BufferedImage currentStep = Utils.resize(gameState.getCurrentStep(), 300, 300);
+        BufferedImage currentStep = Utils.resizeImage(gameState.getCurrentStep(), 300, 300);
         this.hangedImage.setIcon(new ImageIcon(currentStep));
 
         this.labelUsedLetters.setText(gameState.getUsedLetters());

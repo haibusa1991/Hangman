@@ -21,10 +21,10 @@ import java.net.URL;
 public class LogicController {
     private static LogicController instance = null;
 
-    private StateRepository stateRepository;
-    private SettingsManager settingsManager;
-    private WindowController windowController;
-    private GraphicsManager graphicsManager;
+    private final StateRepository stateRepository;
+    private final SettingsManager settingsManager;
+    private final WindowController windowController;
+    private final GraphicsManager graphicsManager;
     private GameController gameController = null;
 
     private LogicController() throws
@@ -86,7 +86,7 @@ public class LogicController {
     }
 
     private void showMenu() {
-        this.windowController.showFrame(new ShowMenuFrameCommand());
+            this.windowController.showFrame(new ShowMenuFrameCommand());
     }
 
     public static void terminateApp() {
@@ -158,11 +158,11 @@ public class LogicController {
         //todo implement
     }
 
-    public void menuFrameButtonClickSettings() {
+    public void menuFrameButtonClickSettings(){
         this.windowController.showFrame(new ShowSettingFrameCommand());
     }
 
-    public void menuFrameButtonClickAbout() {
+    public void menuFrameButtonClickAbout(){
         this.windowController.showFrame(new ShowAboutFrameCommand());
     }
 
@@ -210,6 +210,15 @@ public class LogicController {
 
     public Word getHardWord() {
         return this.stateRepository.getHardWord();
+    }
+
+    public static void throwError(String errorMessage ){
+        new ErrorDialog(errorMessage);
+        terminateApp();
+    }
+
+    public Image getWindowIcon(){
+        return this.graphicsManager.getWindowIcon();
     }
 }
 
