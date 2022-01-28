@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact build-on-make="true" name="GfxGenerator">
-    <output-path>$PROJECT_DIR$/bin</output-path>
+    <output-path>$PROJECT_DIR$/bin/GfxGenerator</output-path>
     <root id="root">
       <element id="archive" name="GfxGenerator.jar">
         <element id="directory" name="META-INF">

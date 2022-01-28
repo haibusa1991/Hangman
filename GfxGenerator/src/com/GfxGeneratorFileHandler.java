@@ -1,10 +1,12 @@
 package com;
 
-import com.dialogs.ErrorDialog;
-import com.logicController.FileHandler;
 import com.logicController.GraphicsPackage;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.DeflaterOutputStream;
 
 import static com.GfxGeneratorConstants.*;
@@ -12,35 +14,80 @@ import static com.GfxGeneratorConstants.*;
 public class GfxGeneratorFileHandler {
 
     public GraphicsPackage readImagesFromDisk() {
+        String path = getAbsolutePngFilepath();
+        List<String> images = getImagesList(path);
+
         GraphicsPackage pack = new GraphicsPackage();
-        try {
-            for (int i = 0; i < NUMBER_OF_FRAMES; i++) {
-                String filename = PNG_PATH + PNG_FILE_NAME + i + PNG_FILE_EXTENSION;
 
-                InputStream fos = this.getClass().getResourceAsStream(filename);
-
-                byte[] image = new byte[0]; //added initialization and if check because intellij nags about null pointers
-                if (fos != null) {
-                    image = fos.readAllBytes();
-                }
-
-                pack.add(i, image);
+        for (int i = 0; i < images.size(); i++) {
+            try {
+                FileInputStream fos = new FileInputStream(images.get(i));
+                pack.add(i, fos.readAllBytes());
+            } catch (Exception e) {
+                GfxGenerator.throwError(e.getMessage());
             }
-        } catch (Exception e) {
-            new ErrorDialog(e.getMessage());
         }
         return pack;
     }
 
+    private List<String> getImagesList(String path) {
+        File gfxDirectory = new File(path);
+        String[] files = gfxDirectory.list();
+        if (files == null) {
+            GfxGenerator.throwError(EMPTY_DIRECTORY + gfxDirectory);
+        }
+
+        List<String> filePaths = Arrays.stream(files)
+                .filter(e -> e.startsWith(FILENAME_BEGINS_WITH) && e.endsWith(FILENAME_ENDS_WITH))
+                .sorted(Comparator.comparingInt(this::sanitize))
+                .map(e -> e = path + e)
+                .collect(Collectors.toList());
+        if (filePaths.isEmpty()) {
+            GfxGenerator.throwError(FILE_NAMING_WRONG);
+        }
+        return filePaths;
+    }
+
+    private int sanitize(String filename) {
+        StringBuilder sb = new StringBuilder(filename);
+
+        for (int i = 0; i < FILENAME_BEGINS_WITH.length(); i++) {
+            sb.deleteCharAt(0);
+        }
+
+        for (int i = 0; i < FILENAME_ENDS_WITH.length(); i++) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        int value=0;
+        try {
+            value = Integer.parseInt(sb.toString());
+        } catch (Exception e) {
+            GfxGenerator.throwError(FILE_NAMING_WRONG);
+        }
+        return value;
+    }
+
     public void saveGraphicsPackageToDisk(GraphicsPackage pack) {
-        String pngTargetPath = "gfx.dat";
 
         try {
-            FileOutputStream fos = new FileOutputStream(pngTargetPath);
+            FileOutputStream fos = new FileOutputStream(GFX_FILE_NAME);
             ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
             oos.writeObject(pack);
         } catch (IOException e) {
-            new ErrorDialog(e.getMessage());
+            GfxGenerator.throwError(e.getMessage());
         }
+    }
+
+    private String getAbsolutePngFilepath() {
+
+        String filepath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toString();
+        StringBuilder sb = new StringBuilder(filepath.substring(filepath.indexOf(":/") + 2));
+
+        while (sb.charAt(sb.length() - 1) != '/') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        return sb.toString();
     }
 }

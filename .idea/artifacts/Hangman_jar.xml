@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact build-on-make="true" name="Hangman:jar">
-    <output-path>$PROJECT_DIR$/bin</output-path>
+    <output-path>$PROJECT_DIR$/bin/Hangman</output-path>
     <root id="root">
       <element id="archive" name="Hangman.jar">
         <element id="directory" name="META-INF">
