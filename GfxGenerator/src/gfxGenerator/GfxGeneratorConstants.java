@@ -1,4 +1,4 @@
-package com;
+package gfxGenerator;
 
 public class GfxGeneratorConstants {
 
@@ -14,8 +14,10 @@ public class GfxGeneratorConstants {
     public static String FILENAME_ENDS_WITH = ".png";
 
     //errors
-    public static String FILE_NAMING_WRONG = "Invalid filenames or no files were found. Files must be named \"hanged#.png\" where # is an integer. Case insensitive." +
-            "\nTry putting all .png files into a new directory along with the .jar file.";
+    public static String FILE_NAMING_WRONG = "Invalid filenames or no files were found. " +
+            "Files must be named \"" + FILENAME_BEGINS_WITH + "#" + FILENAME_ENDS_WITH +
+            "\" where # is an integer. Case insensitive.\nTry putting all .png files into " +
+            "a new directory along with the .jar file.";
     public static String EMPTY_DIRECTORY = "No files in target directory - ";
 
     //messages

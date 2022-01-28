@@ -1,4 +1,4 @@
-package com;
+package gfxGenerator;
 
 import com.dialogs.ErrorDialog;
 import com.logicController.GraphicsPackage;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.GfxGeneratorConstants.*;
+import static gfxGenerator.GfxGeneratorConstants.*;
 
 public class PreviewFrame {
     private final List<BufferedImage> loadedImages;

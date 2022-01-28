@@ -2,14 +2,10 @@ package com.database;
 
 import com.gameController.Word;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,7 +66,8 @@ public class OnlineWordsFetcher {
             String word = rawPair.split("\r\n")[0]
                     .replace("<td>", "")
                     .replace("</a></td>", "")
-                    .split(">")[1];
+                    .split(">")[1]
+                    .toUpperCase();
 
             String description = rawPair
                     .split("\r\n")[1]

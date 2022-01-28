@@ -8,7 +8,7 @@ import com.sleepycat.je.EnvironmentConfig;
 import java.io.File;
 import java.util.Map;
 
-public class DatabaseCreator {
+public class DatabaseCreatorInvalid {
     public static void main(String[] args) {
 //        initializeEnvironment();
 //        OnlineWordsFetcher owf = new OnlineWordsFetcher("..ф..");

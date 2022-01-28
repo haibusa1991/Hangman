@@ -1,12 +1,10 @@
-package com;
+package gfxGenerator;
 
 import com.dialogs.ErrorDialog;
 import com.logicController.GraphicsPackage;
 
 import javax.swing.*;
 import java.io.Serializable;
-
-import static com.GfxGeneratorConstants.*;
 
 public class GfxGenerator implements Serializable {
 
@@ -18,8 +16,8 @@ public class GfxGenerator implements Serializable {
 
 
         int result = JOptionPane.showConfirmDialog(null,
-                YES_NO_SHOW_PREVIEW_QUESTION,
-                YES_NO_SHOW_PREVIEW_TITLE,
+                GfxGeneratorConstants.YES_NO_SHOW_PREVIEW_QUESTION,
+                GfxGeneratorConstants.YES_NO_SHOW_PREVIEW_TITLE,
                 JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION) {

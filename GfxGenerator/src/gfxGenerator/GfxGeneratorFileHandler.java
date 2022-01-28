@@ -1,4 +1,4 @@
-package com;
+package gfxGenerator;
 
 import com.logicController.GraphicsPackage;
 
@@ -8,8 +8,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.DeflaterOutputStream;
-
-import static com.GfxGeneratorConstants.*;
 
 public class GfxGeneratorFileHandler {
 
@@ -34,16 +32,16 @@ public class GfxGeneratorFileHandler {
         File gfxDirectory = new File(path);
         String[] files = gfxDirectory.list();
         if (files == null) {
-            GfxGenerator.throwError(EMPTY_DIRECTORY + gfxDirectory);
+            GfxGenerator.throwError(GfxGeneratorConstants.EMPTY_DIRECTORY + gfxDirectory);
         }
 
         List<String> filePaths = Arrays.stream(files)
-                .filter(e -> e.startsWith(FILENAME_BEGINS_WITH) && e.endsWith(FILENAME_ENDS_WITH))
+                .filter(e -> e.startsWith(GfxGeneratorConstants.FILENAME_BEGINS_WITH) && e.endsWith(GfxGeneratorConstants.FILENAME_ENDS_WITH))
                 .sorted(Comparator.comparingInt(this::sanitize))
                 .map(e -> e = path + e)
                 .collect(Collectors.toList());
         if (filePaths.isEmpty()) {
-            GfxGenerator.throwError(FILE_NAMING_WRONG);
+            GfxGenerator.throwError(GfxGeneratorConstants.FILE_NAMING_WRONG);
         }
         return filePaths;
     }
@@ -51,11 +49,11 @@ public class GfxGeneratorFileHandler {
     private int sanitize(String filename) {
         StringBuilder sb = new StringBuilder(filename);
 
-        for (int i = 0; i < FILENAME_BEGINS_WITH.length(); i++) {
+        for (int i = 0; i < GfxGeneratorConstants.FILENAME_BEGINS_WITH.length(); i++) {
             sb.deleteCharAt(0);
         }
 
-        for (int i = 0; i < FILENAME_ENDS_WITH.length(); i++) {
+        for (int i = 0; i < GfxGeneratorConstants.FILENAME_ENDS_WITH.length(); i++) {
             sb.deleteCharAt(sb.length() - 1);
         }
 
@@ -63,7 +61,7 @@ public class GfxGeneratorFileHandler {
         try {
             value = Integer.parseInt(sb.toString());
         } catch (Exception e) {
-            GfxGenerator.throwError(FILE_NAMING_WRONG);
+            GfxGenerator.throwError(GfxGeneratorConstants.FILE_NAMING_WRONG);
         }
         return value;
     }
@@ -71,7 +69,7 @@ public class GfxGeneratorFileHandler {
     public void saveGraphicsPackageToDisk(GraphicsPackage pack) {
 
         try {
-            FileOutputStream fos = new FileOutputStream(GFX_FILE_NAME);
+            FileOutputStream fos = new FileOutputStream(GfxGeneratorConstants.GFX_FILE_NAME);
             ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
             oos.writeObject(pack);
         } catch (IOException e) {
