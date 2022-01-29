@@ -1,6 +1,8 @@
 package com.gameController;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
     private final String word;
     private final String description;
 

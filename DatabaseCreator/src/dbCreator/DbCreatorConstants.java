@@ -3,41 +3,38 @@ package dbCreator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbCreatorConstants {
+public class DbCreatorConstants extends CsvGenerator {
     public static final List<String> DB_CREATOR_EASY_WORD_MASKS = new ArrayList<>() {
         {
-            ///todo uncomment for release
             add("...а.");
-//            add("....а.");
-//            add(".а....");
-//            add(".а.....");
-//            add("........а");
+            add("....а.");
+            add(".а....");
+            add(".а.....");
+            add("........а");
         }
     };
 
     public static final List<String> DB_CREATOR_MEDIUM_WORD_MASKS = new ArrayList<>() {
         {
-            //todo uncomment for release
             add("...р....");
-//            add("...р..");
-//            add("...т.....");
-//            add("...м...");
-//            add(".к........");
+            add("...р..");
+            add("...т.....");
+            add("...м...");
+            add(".к........");
         }
     };
 
     public static final List<String> DB_CREATOR_HARD_WORD_MASKS = new ArrayList<>() {
         {
-            //todo uncomment for release
             add("...й.");
-//            add(".ф.....");
-//            add("..ж...");
-//            add(".......з.");
-//            add("...ц.....");
-//            add(".....ъ.");
-//            add(".....я");
-//            add("...ю..");
-//            add("..ю...");
+            add(".ф.....");
+            add("..ж...");
+            add(".......з.");
+            add("...ц.....");
+            add(".....ъ.");
+            add(".....я");
+            add("...ю..");
+            add("..ю...");
         }
     };
 

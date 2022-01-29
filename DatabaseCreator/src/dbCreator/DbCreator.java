@@ -1,9 +1,7 @@
 package dbCreator;
 
-import java.io.IOException;
-
 public class DbCreator {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
 
         DbLogicController controller = new DbLogicController();
         int action = controller.getAction();

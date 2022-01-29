@@ -1,35 +1,40 @@
 package dbCreator;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
+import com.gameController.Word;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.DeflaterOutputStream;
 
 import static dbCreator.DbCreatorConstants.*;
 
 public class DbCreatorFileHandler {
 
-    public void writeCsvToDisk(String csvContent) throws IOException {
-        FileOutputStream fos = new FileOutputStream(getFilenameAndPath());
-        //todo write exception handling so the write stream is flushed and  closed on error
-        fos.write(csvContent.getBytes());
+    public void writeCsvToDisk(String csvContent) {
+        try {
+            FileOutputStream fos = new FileOutputStream(getFilenameAndPath());
+            fos.write(csvContent.getBytes());
+        } catch (Exception e) {
+            DbLogicController.throwError(e.getMessage());
+        }
 
     }
 
     private String getFilenameAndPath() {
         String[] directoryContents = new File(getCurrentPath()).list();
 
-        int lastCsvNum = Arrays.stream(directoryContents) //todo fix warning
+        assert directoryContents != null;
+        int lastCsvNum = Arrays.stream(directoryContents)
                 .filter(e -> e.startsWith(CSV_FILENAME) && e.endsWith(CSV_FILE_EXTENSION))
                 .map(this::getCsvNumber)
-                .mapToInt(e->e)
+                .mapToInt(e -> e)
                 .max()
                 .orElse(-1);
 
-        return getCurrentPath() + CSV_FILENAME + (lastCsvNum+1) + CSV_FILE_EXTENSION;
+        return getCurrentPath() + CSV_FILENAME + (lastCsvNum + 1) + CSV_FILE_EXTENSION;
     }
 
-    private String getCurrentPath() { //this works
+    public String getCurrentPath() {
         String filepath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toString();
         StringBuilder sb = new StringBuilder(filepath.substring(filepath.indexOf(":/") + 2));
 
@@ -39,7 +44,7 @@ public class DbCreatorFileHandler {
         return sb.toString();
     }
 
-    private int getCsvNumber(String csvFilename) { //this works as well
+    private int getCsvNumber(String csvFilename) {
         StringBuilder sb = new StringBuilder(csvFilename);
 
         for (int i = 0; i < CSV_FILENAME.length(); i++) {
@@ -59,6 +64,48 @@ public class DbCreatorFileHandler {
         return value;
     }
 
-    //todo write a read from disk method that reads the last 3 .csv files. Will be required for the
-    // database creator module.
+    public String[] getLastThreeCsvs() {
+
+        String[] directoryContents = new File(getCurrentPath()).list();
+        assert directoryContents != null;
+
+        String[] csvFilenames = Arrays.stream(directoryContents)
+                .filter(e -> e.startsWith(CSV_FILENAME) && e.endsWith(CSV_FILE_EXTENSION))
+                .sorted(Comparator.comparing(this::getCsvNumber).reversed())
+                .limit(3)
+                .sorted(Comparator.comparing(this::getCsvNumber))
+                .map(e -> e = getCurrentPath() + e)
+                .toArray(String[]::new);
+
+        List<String> csvContents = new ArrayList<>();
+
+        for (String filename : csvFilenames) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                BufferedReader br = new BufferedReader(new FileReader(filename));
+                br.lines().forEach(e -> {
+                    sb.append(e);
+                    sb.append(System.lineSeparator());
+                });
+                csvContents.add(sb.toString());
+            } catch (Exception e) {
+                DbLogicController.throwError(e.getMessage());
+            }
+        }
+
+        return csvContents.toArray(String[]::new);
+    }
+
+    public void writeDbToDisk(List<Word> wordList, String filename) {
+        String targetPath = getCurrentPath() + filename;
+
+        try {
+            FileOutputStream fos = new FileOutputStream(targetPath);
+            ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(fos));
+            oos.writeObject(wordList);
+            oos.close();
+        } catch (Exception e) {
+            DbLogicController.throwError(e.toString());
+        }
+    }
 }
