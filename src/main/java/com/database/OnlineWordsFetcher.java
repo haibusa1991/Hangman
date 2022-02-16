@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OnlineWordsFetcher {
+public class OnlineWordsFetcher implements Runnable {
 
     private final HttpClient httpClient;
     private List<Word> words;
@@ -86,5 +86,10 @@ public class OnlineWordsFetcher {
 
     private String capitalizeFirstLetter(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    @Override
+    public void run() {
+
     }
 }

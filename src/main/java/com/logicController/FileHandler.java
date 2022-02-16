@@ -1,10 +1,13 @@
 package com.logicController;
 
+import com.enums.Difficulty;
+import com.gameController.Word;
 import com.strings.ErrorMessages;
 import com.strings.Filenames;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -82,7 +85,12 @@ public class FileHandler {
         return icon;
     }
 
-    public String getResourcesPath(){
-        return this.getClass().getResourceAsStream(Filenames.RESOURCES_PATH).toString();
+
+    public List<Word> readDbFromDisk(Difficulty difficulty) {
+        //todo implement reading precompiled word dbs
+
+        return null;
     }
+
+
 }

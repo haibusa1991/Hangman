@@ -47,6 +47,9 @@ public class LogicController {
         // online fetcher should fetch 3 list of words (easy, medium and hard) and populate the repo
         // if online mode is off should query the local db and get the words from it
         // word mask should be dynamically generated and words updated after several games (like 3 or so)
+        // * 16.02 - state repo is populated with predefined words updated in the background as new words are
+        // fetched from the web
+
         OnlineWordsFetcher owfE = new OnlineWordsFetcher("..а..");
         OnlineWordsFetcher owfM = new OnlineWordsFetcher("...р....");
         OnlineWordsFetcher owfH = new OnlineWordsFetcher("...й.");
