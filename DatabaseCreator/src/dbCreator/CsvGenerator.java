@@ -1,6 +1,6 @@
 package dbCreator;
 
-import com.database.OnlineWordsFetcher;
+import com.logicController.OnlineWordsFetcher;
 import com.gameController.Word;
 
 import java.util.ArrayList;

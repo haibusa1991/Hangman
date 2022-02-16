@@ -1,5 +1,6 @@
 package com.logicController;
 
+import com.enums.Difficulty;
 import com.gameController.HangmanGameState;
 import com.gameController.Word;
 
@@ -20,9 +21,14 @@ public class StateRepository {
 
 
     public StateRepository() {
-        this.easyWords = new ArrayList<>();
-        this.mediumWords = new ArrayList<>();
-        this.hardWords = new ArrayList<>();
+        initializeWordSets();
+    }
+
+    private void initializeWordSets() {
+        FileHandler fh = new FileHandler();
+        this.easyWords = fh.readDbFromDisk(Difficulty.EASY);
+        this.mediumWords = fh.readDbFromDisk(Difficulty.MEDIUM);
+        this.hardWords = fh.readDbFromDisk(Difficulty.HARD);
     }
 
     public void saveState(HangmanGameState state) {

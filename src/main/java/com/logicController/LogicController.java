@@ -1,6 +1,5 @@
 package com.logicController;
 
-import com.database.OnlineWordsFetcher;
 import com.dialogCommands.ShowSaveGameDialogCommand;
 import com.dialogCommands.ShowWarningDialogCommand;
 import com.frameCommands.*;
@@ -43,19 +42,13 @@ public class LogicController {
     }
 
     private void initializeStateRepository() {
-        //todo implement properly
-        // online fetcher should fetch 3 list of words (easy, medium and hard) and populate the repo
-        // if online mode is off should query the local db and get the words from it
-        // word mask should be dynamically generated and words updated after several games (like 3 or so)
-        // * 16.02 - state repo is populated with predefined words updated in the background as new words are
-        // fetched from the web
+        if (this.settingsManager.getSettings().isOnline) {
 
-        OnlineWordsFetcher owfE = new OnlineWordsFetcher("..а..");
-        OnlineWordsFetcher owfM = new OnlineWordsFetcher("...р....");
-        OnlineWordsFetcher owfH = new OnlineWordsFetcher("...й.");
-        this.stateRepository.setEasyWords(owfE.getWords());
-        this.stateRepository.setMediumWords(owfM.getWords());
-        this.stateRepository.setHardWords(owfH.getWords());
+        }
+    }
+
+    private void updateStateRepositoryWords() {
+
     }
 
     public static LogicController getInstance() {
@@ -88,7 +81,7 @@ public class LogicController {
     }
 
     private void showMenu() {
-            this.windowController.showFrame(new ShowMenuFrameCommand());
+        this.windowController.showFrame(new ShowMenuFrameCommand());
     }
 
     public static void terminateApp() {
@@ -160,11 +153,11 @@ public class LogicController {
         //todo implement
     }
 
-    public void menuFrameButtonClickSettings(){
+    public void menuFrameButtonClickSettings() {
         this.windowController.showFrame(new ShowSettingFrameCommand());
     }
 
-    public void menuFrameButtonClickAbout(){
+    public void menuFrameButtonClickAbout() {
         this.windowController.showFrame(new ShowAboutFrameCommand());
     }
 
@@ -214,12 +207,12 @@ public class LogicController {
         return this.stateRepository.getHardWord();
     }
 
-    public static void throwError(String errorMessage ){
+    public static void throwError(String errorMessage) {
         new ErrorDialog(errorMessage);
         terminateApp();
     }
 
-    public Image getWindowIcon(){
+    public Image getWindowIcon() {
         return this.graphicsManager.getWindowIcon();
     }
 }

@@ -12,6 +12,7 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 import static com.strings.Filenames.*;
+import static com.strings.ErrorMessages.*;
 
 public class FileHandler {
 
@@ -45,25 +46,25 @@ public class FileHandler {
 
     public GraphicsPackage readGraphicsFromDisk() throws IOException, ClassNotFoundException {
 
-        InputStream graphics = this.getClass().getResourceAsStream(Filenames.GRAPHICS_FILENAME);
+        InputStream graphics = this.getClass().getResourceAsStream(GRAPHICS_FILENAME);
         if (graphics == null) {
-            throw new IllegalStateException(ErrorMessages.GFX_FILE_NOT_FOUND);
+            throw new IllegalStateException(GFX_FILE_NOT_FOUND);
         }
 
         ObjectInputStream ois;
         try {
             ois = new ObjectInputStream(new InflaterInputStream(graphics));
         } catch (StreamCorruptedException e1) {
-            throw new StreamCorruptedException(ErrorMessages.GFX_FILE_CORRUPTED);
+            throw new StreamCorruptedException(GFX_FILE_CORRUPTED);
         } catch (IOException e2) {
-            throw new IOException(ErrorMessages.GFX_FILE_INACCESSIBLE);
+            throw new IOException(GFX_FILE_INACCESSIBLE);
         }
 
         GraphicsPackage graphicsPackage;
         try {
             graphicsPackage = (GraphicsPackage) ois.readObject();
         } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundException(ErrorMessages.GFX_FILE_INTERNAL_ERROR);
+            throw new ClassNotFoundException(GFX_FILE_INTERNAL_ERROR);
         }
 
         ois.close();
@@ -74,23 +75,55 @@ public class FileHandler {
     public ImageIcon readWindowIconFromDisk() throws IOException {
         InputStream stream;
         stream = this.getClass().getResourceAsStream(GRAPHICS_WINDOW_ICON);
-        ImageIcon icon;
+        ImageIcon icon = null;
         try {
-            icon = new ImageIcon(stream.readAllBytes());
+            if (stream != null) {
+                icon = new ImageIcon(stream.readAllBytes());
+            }
         } catch (IOException e) {
             throw new IOException(ErrorMessages.UTILS_CANNOT_LOAD_ICON_IMAGE);
         } finally {
-            stream.close();
+            if (stream != null) {
+                stream.close();
+            }
         }
         return icon;
     }
 
 
-    public List<Word> readDbFromDisk(Difficulty difficulty) {
-        //todo implement reading precompiled word dbs
+    public WordList readDbFromDisk(Difficulty difficulty) {
+        String dbFilename = null;
+
+        switch (difficulty) {
+            case EASY -> dbFilename = EASY_WORDS_DB_FILENAME;
+            case MEDIUM -> dbFilename = MEDIUM_WORDS_DB_FILENAME;
+            case HARD -> dbFilename = HARD_WORDS_DB_FILENAME;
+            default -> LogicController.throwError(ErrorMessages.LOCAL_DB_DIFFICULTY_UNSPECIFIED);
+        }
+
+        InputStream db = this.getClass().getResourceAsStream(dbFilename);
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(db);
+        } catch (IOException e) {
+            LogicController.throwError(LOCAL_DB_IO_ERROR);
+        }
+        Object readObject = null;
+        try {
+            if (ois != null) {
+                readObject = ois.readObject();
+            }
+        } catch (IOException e) {
+            LogicController.throwError(LOCAL_DB_IO_ERROR);
+        } catch (ClassNotFoundException e) {
+            LogicController.throwError(LOCAL_DB_CLASS_NOT_FOUND);
+        }
+
+        if (readObject instanceof WordList) {
+            return (WordList) readObject;
+        }
 
         return null;
     }
-
 
 }

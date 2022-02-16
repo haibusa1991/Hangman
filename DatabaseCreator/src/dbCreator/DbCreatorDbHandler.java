@@ -2,6 +2,7 @@ package dbCreator;
 
 
 import com.gameController.Word;
+import com.logicController.WordList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class DbCreatorDbHandler extends DbCreatorConstants {
     }
 
     private void generateDbAndSaveToDisk(Map<String, String> csv, String filename) {
-        List<Word> wordList = new ArrayList<>();
+        WordList wordList = new WordList();
         for (Map.Entry<String, String> entry : csv.entrySet()) {
             wordList.add(new Word(entry.getKey(), entry.getValue()));
         }

@@ -9,6 +9,11 @@ public class ErrorMessages {
     public static final String GFX_FILE_INTERNAL_ERROR = "Internal error - GraphicsPackage object not found";
 
     public static final String WINDOW_CONTROLLER_CANNOT_GET_GAME_FRAME = "Unable to get game frame!";
+
     public static final String UTILS_CANNOT_LOAD_ICON_IMAGE = "Unable to load " + GRAPHICS_WINDOW_ICON;
+
+    public static final String LOCAL_DB_DIFFICULTY_UNSPECIFIED = "Unable to load local db file - no corresponding filename exists.";
+    public static final String LOCAL_DB_IO_ERROR = "Unable to read local db file.";
+    public static final String LOCAL_DB_CLASS_NOT_FOUND = "Unable to cast local db file to WordList object.";
 
 }

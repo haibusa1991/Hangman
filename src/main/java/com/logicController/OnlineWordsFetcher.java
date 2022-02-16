@@ -1,4 +1,4 @@
-package com.database;
+package com.logicController;
 
 import com.gameController.Word;
 
