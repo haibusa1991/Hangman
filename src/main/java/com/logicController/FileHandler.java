@@ -1,13 +1,10 @@
 package com.logicController;
 
 import com.enums.Difficulty;
-import com.gameController.Word;
 import com.strings.ErrorMessages;
-import com.strings.Filenames;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -95,19 +92,23 @@ public class FileHandler {
         String dbFilename = null;
 
         switch (difficulty) {
-            case EASY -> dbFilename = EASY_WORDS_DB_FILENAME;
-            case MEDIUM -> dbFilename = MEDIUM_WORDS_DB_FILENAME;
-            case HARD -> dbFilename = HARD_WORDS_DB_FILENAME;
-            default -> LogicController.throwError(ErrorMessages.LOCAL_DB_DIFFICULTY_UNSPECIFIED);
+            case EASY -> dbFilename = RESOURCES_PATH + EASY_WORDS_DB_FILENAME;
+            case MEDIUM -> dbFilename = RESOURCES_PATH + MEDIUM_WORDS_DB_FILENAME;
+            case HARD -> dbFilename = RESOURCES_PATH + HARD_WORDS_DB_FILENAME;
+            default -> LogicController.throwError(ErrorMessages.LOCAL_DB_FILE_NOT_FOUND);
         }
 
-        InputStream db = this.getClass().getResourceAsStream(dbFilename);
+        InputStream is = this.getClass().getResourceAsStream(dbFilename);
+
         ObjectInputStream ois = null;
         try {
-            ois = new ObjectInputStream(db);
+            if (is != null) {
+                ois = new ObjectInputStream(new InflaterInputStream(is));
+            }
         } catch (IOException e) {
             LogicController.throwError(LOCAL_DB_IO_ERROR);
         }
+
         Object readObject = null;
         try {
             if (ois != null) {

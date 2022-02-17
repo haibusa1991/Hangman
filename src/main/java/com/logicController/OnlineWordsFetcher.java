@@ -12,15 +12,13 @@ import java.util.regex.Pattern;
 
 public class OnlineWordsFetcher implements Runnable {
 
-    private final HttpClient httpClient;
+    private HttpClient httpClient;
+    private final String wordmask;
     private List<Word> words;
 
-    public OnlineWordsFetcher(String wordMask) {
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .build();
+    public OnlineWordsFetcher(String wordmask) {
+        this.wordmask = wordmask;
         words = new ArrayList<>();
-        fetchPairs(wordMask);
     }
 
 
@@ -90,6 +88,9 @@ public class OnlineWordsFetcher implements Runnable {
 
     @Override
     public void run() {
-
+        this.httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .build();
+        fetchPairs(this.wordmask);
     }
 }

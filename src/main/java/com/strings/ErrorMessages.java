@@ -12,7 +12,7 @@ public class ErrorMessages {
 
     public static final String UTILS_CANNOT_LOAD_ICON_IMAGE = "Unable to load " + GRAPHICS_WINDOW_ICON;
 
-    public static final String LOCAL_DB_DIFFICULTY_UNSPECIFIED = "Unable to load local db file - no corresponding filename exists.";
+    public static final String LOCAL_DB_FILE_NOT_FOUND = "Unable to load local db file - no corresponding filename exists.";
     public static final String LOCAL_DB_IO_ERROR = "Unable to read local db file.";
     public static final String LOCAL_DB_CLASS_NOT_FOUND = "Unable to cast local db file to WordList object.";
 

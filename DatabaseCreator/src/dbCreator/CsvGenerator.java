@@ -53,6 +53,7 @@ public class CsvGenerator {
     private void fetchWords(List<String> wordMasksSet, Map<String, String> wordSet) {
         for (String s : wordMasksSet) {
             OnlineWordsFetcher owf = new OnlineWordsFetcher(s);
+            owf.run();
             List<Word> fetchedWords = owf.getWords();
             for (Word word : fetchedWords) {
                 wordSet.putIfAbsent(word.getWord(), word.getDescription());

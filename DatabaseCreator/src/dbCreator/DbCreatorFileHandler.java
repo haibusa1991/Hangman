@@ -1,6 +1,7 @@
 package dbCreator;
 
 import com.gameController.Word;
+import com.logicController.WordList;
 
 import java.io.*;
 import java.util.*;
@@ -96,7 +97,7 @@ public class DbCreatorFileHandler {
         return csvContents.toArray(String[]::new);
     }
 
-    public void writeDbToDisk(List<Word> wordList, String filename) {
+    public void writeDbToDisk(WordList wordList, String filename) {
         String targetPath = getCurrentPath() + filename;
 
         try {

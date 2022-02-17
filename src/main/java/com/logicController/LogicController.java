@@ -2,6 +2,7 @@ package com.logicController;
 
 import com.dialogCommands.ShowSaveGameDialogCommand;
 import com.dialogCommands.ShowWarningDialogCommand;
+import com.enums.Difficulty;
 import com.frameCommands.*;
 import com.dialogs.ErrorDialog;
 import com.frames.GameFrame;
@@ -37,18 +38,17 @@ public class LogicController {
         windowController = new WindowController();
         graphicsManager = new GraphicsManager();
 
-        initializeStateRepository();
-
-    }
-
-    private void initializeStateRepository() {
-        if (this.settingsManager.getSettings().isOnline) {
-
-        }
+        updateStateRepositoryWords();
     }
 
     private void updateStateRepositoryWords() {
+        if (!this.settingsManager.getSettings().isOnline) {
+            return;
+        }
 
+        Difficulty difficulty = this.settingsManager.getSettings().difficulty;
+        Thread updater = new Thread(new WordsetUpdater(this.stateRepository, difficulty));
+        updater.start();
     }
 
     public static LogicController getInstance() {
@@ -139,6 +139,7 @@ public class LogicController {
 
     public void gameFrameButtonClickNewGame() {
         gameController.startNewGame(this.settingsManager.getSettings().difficulty);
+        updateStateRepositoryWords();
     }
 
     public void menuFrameButtonClickNewGame() {
