@@ -1,32 +1,35 @@
-package com.logicController;
+package com.main;
 
 import com.enums.Difficulty;
 import com.gameController.Word;
+import com.logicController.OnlineWordsFetcher;
+import com.logicController.RandomWordmask;
+import com.logicController.StateRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordsetUpdater implements Runnable {
+public class DummyUpdater implements Runnable {
     private final StateRepository stateRepository;
     private final Difficulty difficulty;
 
 
-    public WordsetUpdater(StateRepository stateRepository, Difficulty difficulty) {
+    public DummyUpdater(StateRepository stateRepository, Difficulty difficulty) {
         this.stateRepository = stateRepository;
         this.difficulty = difficulty;
     }
 
     @Override
     public void run() {
-        OnlineWordsFetcher owf;
+        DummyDownloader dd;
         List<Word> words = new ArrayList<>();
 
         while (words.isEmpty()) {
             String wordmask = new RandomWordmask().getMask(this.difficulty);
-            owf = new OnlineWordsFetcher(wordmask);
-            Thread fetcher = new Thread(owf);
-
+            dd = new DummyDownloader(wordmask);
+            Thread fetcher = new Thread(dd);
             fetcher.start();
+
             while (!fetcher.isAlive()) {
                 try {
                     Thread.sleep(100);
@@ -34,7 +37,7 @@ public class WordsetUpdater implements Runnable {
                     e.printStackTrace();
                 }
             }
-            words = owf.getWords();
+            words = dd.getWords();
         }
 
         switch (this.difficulty) {
@@ -42,7 +45,7 @@ public class WordsetUpdater implements Runnable {
             case MEDIUM -> this.stateRepository.setMediumWords(words);
             case HARD -> this.stateRepository.setHardWords(words);
         }
-
-
     }
 }
+
+
