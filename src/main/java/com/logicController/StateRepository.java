@@ -43,17 +43,14 @@ public class StateRepository {
 
     public void setEasyWords(List<Word> easyWords) {
         this.easyWords = easyWords;
-        System.out.println("Updated easy words in the background!");
     }
 
     public void setMediumWords(List<Word> mediumWords) {
         this.mediumWords = mediumWords;
-        System.out.println("Updated medium words in the background!");
     }
 
     public void setHardWords(List<Word> hardWords) {
         this.hardWords = hardWords;
-        System.out.println("Updated hard words in the background!");
     }
 
     public Word getEasyWord() {

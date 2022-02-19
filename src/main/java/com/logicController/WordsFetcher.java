@@ -1,6 +1,7 @@
 package com.logicController;
 
 import com.gameController.Word;
+import com.strings.ErrorMessages;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,23 +11,33 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OnlineWordsFetcher implements Runnable {
+import static com.strings.ErrorMessages.*;
 
-    private HttpClient httpClient;
-    private final String wordmask;
+public class WordsFetcher {
+
+    private final HttpClient httpClient;
+    private String wordmask;
     private List<Word> words;
 
-    public OnlineWordsFetcher(String wordmask) {
+    public WordsFetcher(String wordmask) {
         this.wordmask = wordmask;
         words = new ArrayList<>();
+
+        this.httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .build();
+    }
+
+    public void setWordmask(String wordmask) {
+        this.wordmask = wordmask;
     }
 
 
-    private void fetchPairs(String wordMask) {
-        HttpRequest request = buildHttpRequest(wordMask);
+    public void fetchPairs() {
+        HttpRequest request = buildHttpRequest(this.wordmask);
         HttpResponse<String> response = getResponse(request);
         List<String> rawPairs = getRawPairs(response);
-        words = getSanitizedPairs(rawPairs);
+        this.words = getSanitizedPairs(rawPairs);
     }
 
     private HttpRequest buildHttpRequest(String wordMask) {
@@ -39,18 +50,22 @@ public class OnlineWordsFetcher implements Runnable {
     }
 
     private HttpResponse<String> getResponse(HttpRequest request) {
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
         try {
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(WORD_FETCHER_REMOTE_SERVER_NOT_RESPONDING);
+            return null;
         }
         return response;
     }
 
     private List<String> getRawPairs(HttpResponse<String> response) {
         List<String> rawPairs = new ArrayList<>();
-        Matcher matcher = Pattern.compile("<td><.*>.*<\\/td>\\R<td>.*<\\/td>").matcher(response.body());
+        if(response==null){
+            return rawPairs;
+        }
+        Matcher matcher = Pattern.compile("<td><.*>.*</td>\\R<td>.*</td>").matcher(response.body());
         while (matcher.find()) {
             rawPairs.add(matcher.group());
         }
@@ -79,6 +94,9 @@ public class OnlineWordsFetcher implements Runnable {
     }
 
     public List<Word> getWords() {
+        if (this.words.isEmpty()) {
+            throw new IllegalStateException(ErrorMessages.WORD_FETCHER_WORDLIST_IS_EMPTY);
+        }
         return Collections.unmodifiableList(this.words);
     }
 
@@ -86,11 +104,4 @@ public class OnlineWordsFetcher implements Runnable {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
-    @Override
-    public void run() {
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .build();
-        fetchPairs(this.wordmask);
-    }
 }

@@ -16,4 +16,8 @@ public class ErrorMessages {
     public static final String LOCAL_DB_IO_ERROR = "Unable to read local db file.";
     public static final String LOCAL_DB_CLASS_NOT_FOUND = "Unable to cast local db file to WordList object.";
 
+    public static final String WORD_FETCHER_WORDLIST_IS_EMPTY = "Unable to fetch words - bad wordmask.";
+    public static final String WORD_FETCHER_REMOTE_SERVER_NOT_RESPONDING = "Unable to fetch words - remote server is not responding.";
+
+
 }

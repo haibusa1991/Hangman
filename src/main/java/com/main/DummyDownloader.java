@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class DummyDownloader implements Runnable {
+public class DummyDownloader{
 
     private final String wordmask;
     private List<Word> words;
@@ -17,7 +17,7 @@ public class DummyDownloader implements Runnable {
         words = new ArrayList<>();
     }
 
-    private void fetchPairs(String wordMask) {
+    public void fetchPairs() {
         Random r = new Random();
         int duration = (r.nextInt(5) + 3) * 1000;
 
@@ -31,11 +31,6 @@ public class DummyDownloader implements Runnable {
 
     public List<Word> getWords() {
         return Collections.unmodifiableList(this.words);
-    }
-
-    @Override
-    public void run() {
-        fetchPairs(this.wordmask);
     }
 
 }

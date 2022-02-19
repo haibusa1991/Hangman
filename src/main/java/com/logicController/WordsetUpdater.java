@@ -18,23 +18,16 @@ public class WordsetUpdater implements Runnable {
 
     @Override
     public void run() {
-        OnlineWordsFetcher owf;
-        List<Word> words = new ArrayList<>();
+        String wordmask = new RandomWordmask().getMask(this.difficulty);
+        WordsFetcher wf = new WordsFetcher(wordmask);
+
+        wf.fetchPairs();
+        List<Word> words = wf.getWords();
 
         while (words.isEmpty()) {
-            String wordmask = new RandomWordmask().getMask(this.difficulty);
-            owf = new OnlineWordsFetcher(wordmask);
-            Thread fetcher = new Thread(owf);
-
-            fetcher.start();
-            while (!fetcher.isAlive()) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            words = owf.getWords();
+            wf.setWordmask(new RandomWordmask().getMask(this.difficulty));
+            wf.fetchPairs();
+            words = wf.getWords();
         }
 
         switch (this.difficulty) {

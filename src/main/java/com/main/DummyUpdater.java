@@ -2,7 +2,6 @@ package com.main;
 
 import com.enums.Difficulty;
 import com.gameController.Word;
-import com.logicController.OnlineWordsFetcher;
 import com.logicController.RandomWordmask;
 import com.logicController.StateRepository;
 
@@ -21,22 +20,14 @@ public class DummyUpdater implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("starded dummy updater");
         DummyDownloader dd;
         List<Word> words = new ArrayList<>();
 
         while (words.isEmpty()) {
             String wordmask = new RandomWordmask().getMask(this.difficulty);
             dd = new DummyDownloader(wordmask);
-            Thread fetcher = new Thread(dd);
-            fetcher.start();
-
-            while (!fetcher.isAlive()) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            dd.fetchPairs();
             words = dd.getWords();
         }
 

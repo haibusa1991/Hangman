@@ -1,6 +1,6 @@
 package dbCreator;
 
-import com.logicController.OnlineWordsFetcher;
+import com.logicController.WordsFetcher;
 import com.gameController.Word;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class CsvGenerator {
 
     private void fetchWords(List<String> wordMasksSet, Map<String, String> wordSet) {
         for (String s : wordMasksSet) {
-            OnlineWordsFetcher owf = new OnlineWordsFetcher(s);
+            WordsFetcher owf = new WordsFetcher(s);
             owf.run();
             List<Word> fetchedWords = owf.getWords();
             for (Word word : fetchedWords) {
